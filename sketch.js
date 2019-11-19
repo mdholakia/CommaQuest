@@ -64,55 +64,6 @@ background(227, 227, 216);
 
 
 }
-//checks if the cursor is inside a bounding box defined by it's upper left and bottom right points
-function mouseOver(x1,y1,x2,y2) {
-if( (mouseX > x1) && (mouseX <x2) && (mouseY > y1) && (mouseY <y2))
-{
-
-  return true;
-
-}
-
-
-      else {
-        //console.log("no we're not on it");
-        return false;
-
-  }
-
-}
-function inBounds(x,y) {
-  var bound;
-  if (x < sceneMargin || x> sceneMargin + sceneWidth || y > sceneBottomMargin || y < sceneTopMargin) {
-
-    bound = false;
-  }
-  else {
-    bound = true;
-  }
-
-return bound;
-}
-
-function getCoord() {
-  console.log(mouseX);
-  console.log(mouseY);
-}
-
-
-function drawPunct(char,size,x,y,color) {
-
-noSmooth();
-noStroke();
-var c = color;
-fill(c);
-textSize(size);
-text(char,x,y);
-
-}
-
-
-
 
 function sceneZero() {
 
@@ -150,16 +101,6 @@ function sceneZero() {
 }
 
 
-function mouseClicked() {
-  getCoord();
-
-  console.log(inBounds(mouseX,mouseY));
-
-  if (drawCase == 1) {
-    mouseClickedSceneOne();
-  }
-
-}
 
 
 function sceneOne() {
@@ -194,90 +135,45 @@ face.display();
     var y = sceneBottomMargin - vSpace*row + 10;
 
 
-    //to create "gaps in the forest, only draw if the perlin noise val for those coordinates is above .5"
-    if(inBounds(x,y) && (noise(x,y) >.3)){
-    drawPunct("Y",size,x,y,0);
+            //to create "gaps in the forest, only draw if the perlin noise val for those coordinates is above .5"
+            if(inBounds(x,y) && (noise(x,y) >.3)){
+            drawPunct("Y",size,x,y,0);
 
-    //draw a canopy for each tree
-    treeCanopy(size,x,y,0,color(255,0,10));
-}
-//vary the startingpoint of new row depending on if it's even or odd
-if ((row % 2) == 0) {
-  startPoint = sceneMargin + 100;
-  hSpace = hSpace + 4;
-}
-else {
-  startPoint = sceneMargin + 10;
-  hSpace = hSpace - 5;
-}
+            //draw a canopy for each tree
+            treeCanopy(size,x,y,0,color(255,0,10));
+            }
+            //vary the startingpoint of new row depending on if it's even or odd
+            if ((row % 2) == 0) {
+              startPoint = sceneMargin + 100;
+              hSpace = hSpace + 4;
+            }
+            else {
+              startPoint = sceneMargin + 10;
+              hSpace = hSpace - 5;
+            }
 }
 
 for (var v = 1; v < snowFall[0]; v++) {
   snowFall[v].fall();
 }
+//draw our special tree
+specialTree();
 
-
-if(fruit.fallen) {
-  //draw the single interactive tree
-
-  drawPunct("Y",specialTreeSize,specialTreeX,specialTreeY,7);
-
-  treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
-  fruit.draw();
-
-}
-
-if((mouseX < specialTreeX + 50) && (mouseX > specialTreeX - 50)) {
-
-//only shake the tree if the fruit hasn't fallen
-if(!fruit.fallen){
-    drawPunct("Y",specialTreeSize,specialTreeX + (sin(TWO_PI * millis()/5 )*3 ),specialTreeY,7);
-
-    push();
-    translate ((sin(TWO_PI * millis()/4 ) + 2), 0);
-    treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
-    pop();
-        fruit.shake();
-        fruit.draw();
-}
-
-  face.move(50);
-  face.display();
-}
-else {
-
-  //draw the single interactive tree
-
-  drawPunct("Y",specialTreeSize,specialTreeX,specialTreeY,7);
-
-  treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
-
-  fruit.draw();
-
-}
-
-//draw a single interactive fruit
-
-
-
-//put special check in mouse click.
-
-}
-
-function mouseClickedSceneOne() {
-  if((mouseX < specialTreeX + 50) && (mouseX > specialTreeX - 50) && !fruit.fallen) {
-    fruit.fall();
-  }
-
-  //testing if you are eating the fruit
-  else if(fruit.fallen && Math.abs(mouseX - fruit.x) < 50 && Math.abs(mouseY - fruit.y) < 50) {
-    console.log("Eating fruit");
-    face.leftEye = true;
-    fruit.eaten = true;
-  }
 }
 
 
 function sceneTest() {
+
+}
+
+
+function drawPunct(char,size,x,y,color) {
+
+noSmooth();
+noStroke();
+var c = color;
+fill(c);
+textSize(size);
+text(char,x,y);
 
 }
