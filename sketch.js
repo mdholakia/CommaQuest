@@ -6,23 +6,29 @@
 
 function preload() {
 }
-
+  var backgroundColor;
   var textCase = 0;
-  var drawCase = 0;
+  var drawCase = 2;
   var sceneWidth;
   var sceneMargin;
   var sceneTopMargin;
   var sceneBottomMargin;
-  let snowFall = [];
+  var snowFall = [];
 var specialTreeY;
 var specialTreeX;
 var specialTreeSize;
 let fruit;
+
+//scene 3
+
+let jitter = [];
+let cells = [];
 function setup() {
 
   // put setup code here
   textFont("Stoke");
   createCanvas(windowWidth, windowHeight);
+  backgroundColor= color(227, 227, 216);
 
 sceneMargin = (windowWidth - windowWidth/2)/2;
 sceneTopMargin = windowHeight/5;
@@ -36,7 +42,7 @@ specialTreeX= windowWidth * 2/3 - 50;
 specialTreeSize = 600;
 fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
 
-
+webSet();
 
 //set first item in array to be number of snowflakes
 snowFall[0] = 50;
@@ -53,7 +59,8 @@ function draw() {
 
   //setGradient(0, windowWidth, 0, windowHeight, c1, c2, Y_AXIS);
 //background(155,155,155);
-background(227, 227, 216);
+
+background(backgroundColor);
 //background(247, 246, 230);
 //background(3, 34, 87);
   // put drawing code here
@@ -163,17 +170,53 @@ specialTree();
 
 
 function sceneTest() {
+  face.leftEye = true;
+  face.move(500);
+  face.display();
 
-}
+   push();
+   //translate(sceneMargin,sceneTopMargin);
+
+ 	// voronoiDraw(0, 0, false, true);
+//
+  //draw a mask to block out border
+  // noFill();
+  // strokeWeight(10);
+  // stroke(backgroundColor);
+  // rect(0,0,700,500);
+  // stroke(0);
+  // strokeWeight(1);
 
 
-function drawPunct(char,size,x,y,color) {
+    let cellArray = jitter[0];
+    for (i = 0; i < (cellArray.length); i ++) {
 
-noSmooth();
-noStroke();
-var c = color;
-fill(c);
-textSize(size);
-text(char,x,y);
+        let subCell = cellArray[i];
+        //console.log(subCell)
+
+          for (j = 0; j < subCell.length - 1; j+=1) {
+
+
+            let p1 = subCell[j];
+            let p2 = subCell[j+1];
+
+
+            strokeWeight(.5);
+            // if(i == 4) {
+            //   stroke(255);
+            // }
+            stroke(0);
+            //heal the web by decreasing the "gap effect with modulo " i controls whole sections. j controls part of the line.
+            if(j%4 ==0) {
+              stroke(color(10,0,255));
+            }
+
+            line(p1[0],p1[1],p2[0],p2[1]);
+
+
+          }
+        }
+        
+
 
 }

@@ -34,9 +34,60 @@ randomSeed(4);\
   \}\
 \
 \
+//Drawing Voronoi from the edge data \
+\
+  let cellArray = jitter[0];\
+  for (i = 0; i < cellArray.length; i ++) \{\
+\
+      let subCell = cellArray[i];\
+      //console.log(subCell)\
+        for (j = 0; j < subCell.length - 1; j+=2) \{\
+\
+\
+          let p1 = subCell[j];\
+          let p2 = subCell[j+1];\
+\
+          stroke(i*50);\
+          strokeWeight(5);\
+          // if(i == 4) \{\
+          //   stroke(255);\
+          // \}\
+          line(p1[0],p1[1],p2[0],p2[1]);\
+\
+\
+//Drawing  a logarithmic circle \
+ush();\
+translate(windowWidth/2, windowHeight/2);\
+angleMode(RADIANS);\
+let r = .5;\
+let a = 4;\
+let b = .1;\
+let spirals = 20;\
+for (angle = 0; angle < TWO_PI*spirals; angle = angle + .5) \{\
+\
+    r = a*exp(b*angle)\
+    let x = r*cos(angle);\
+    let y = r*sin(angle);\
+\
+    circle(x,y,2);\
+\
+\}\
+pop();\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+         \}\
+\
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 {{\NeXTGraphic Screen Shot 2019-11-04 at 8.16.30 PM.png \width11180 \height12580 \appleattachmentpadding0 \appleembedtype0 \appleaqc
-}¬}\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
+\
 }
