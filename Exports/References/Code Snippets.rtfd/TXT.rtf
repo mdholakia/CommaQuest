@@ -56,7 +56,7 @@ randomSeed(4);\
 \
 \
 //Drawing  a logarithmic circle \
-ush();\
+push();\
 translate(windowWidth/2, windowHeight/2);\
 angleMode(RADIANS);\
 let r = .5;\
@@ -78,11 +78,105 @@ pop();\
 \
 \
 \
+//follow Spider \
 \
+    colorMode(RGB,255,255,255,255);\
+    let black = color(0,0,0,255);\
+//Teach the spider to "follow the web\
+    //set the spiders last move to the second element of our array\
+    this.case[1] = this.case[0];\
+    this.case[0] = 10;\
+    // North\
+    if(color(get(this.x, this.y - 1)).toString() == black.toString()) \{\
+      this.case[0] = 0;\
+    \}\
+    // NorthEast\
+    if(color(get(this.x+1, this.y - 1)).toString() == black.toString()) \{\
 \
+      this.case[0] = 1;\
+    \}\
+    // East\
+    if(color(get(this.x+1, this.y)).toString() == black.toString()) \{\
+      this.case[0] = 2;\
+    \}\
+    //SouthEast\
+    if(color(get(this.x+1, this.y + 1)).toString() == black.toString()) \{\
+      this.case[0] = 3;\
+    \}\
+    //South\
+    if(color(get(this.x, this.y + 1)).toString() == black.toString()) \{\
+      this.case[0] = 4;\
+    \}\
+    //SouthWest\
+    if(color(get(this.x - 1, this.y + 1)).toString() == black.toString()) \{\
+      this.case[0] = 5;\
+    \}\
+    //Northwest\
+    if(color(get(this.x - 1, this.y - 1)).toString() == black.toString()) \{\
+      this.case[0] = 7;\
 \
+    \}\
+    //West\
+    if(color(get(this.x - 1, this.y)).toString() == black.toString()) \{\
+      this.case[0] = 6;\
+    \}\
 \
-         \}\
+    //console.log("this is our current case" + this.case[0]);\
+    //console.log("this is our old case" + this.case[1]);\
+\
+    //if we're about to go in the opposite direction\
+    if(abs(this.case[0] - this.case[1]) == 4) \{\
+\
+      this.x = this.x - 1;\
+      this.y = this.y -1;\
+    \}\
+\
+    else\{\
+    switch (this.case[0]) \{\
+      case 0:\
+        //move north\
+        this.y = this.y - 1;\
+\
+        break;\
+\
+      case 1:\
+        this.x = this.x+1;\
+        this.y =  this.y - 1;\
+        break;\
+\
+      case 2:\
+        this.x = this.x+1;\
+        break;\
+\
+      case 3:\
+        this.x = this.x+1;\
+        this.y = this.y + 1;\
+        break;\
+\
+      case 4:\
+        this.y = this.y + 1;\
+        break;\
+\
+      case 5:\
+      this.x = this.x - 1;\
+      this.y = this.y + 1;\
+        break;\
+\
+      case 6:\
+      this. x = this.x - 1;\
+        break;\
+\
+      case 7:\
+      this.x = this.x - 1;\
+      this.y = this.y - 1;\
+        break;\
+\
+      default:\
+      this.x = this.x - 1;\
+      this.y = this.y -1;\
+\
+    \}\
+  \}\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0

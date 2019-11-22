@@ -1,5 +1,5 @@
 
-//mouseHandlers.js includes all functions which reference our mouseX & mouse Y 
+//mouseHandlers.js includes all functions which reference our mouseX & mouse Y
 function mouseClicked() {
   getCoord();
 
@@ -7,6 +7,10 @@ function mouseClicked() {
 
   if (drawCase == 1) {
     mouseClickedSceneOne();
+  }
+
+  if (drawCase == 2) {
+    mouseClickedSceneTwo();
   }
 
 }
@@ -75,4 +79,9 @@ function mouseClickedSceneOne() {
     face.leftEye = true;
     fruit.eaten = true;
   }
+}
+
+
+function mouseClickedSceneTwo() {
+  spiderClickCounter = spiderClickCounter * 2;
 }

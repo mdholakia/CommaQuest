@@ -1,7 +1,10 @@
 
 // this function sets up the defaults for our voronoi web. It is called by sketch.js in setup.
 function webSet()  {
-  console.log("I'm calling webSet");
+
+
+  //setting up spider
+
 
   voronoiJitterStepMax(20);
   //Minimum distance between jitters
@@ -58,19 +61,33 @@ for (angle1 = 0; angle1 < TWO_PI*spirals1; angle1 = angle1 + .1) {
 
     //append(cells,voronoiGetSite(x, y, false));
 
-    }
+   }
 }
-
 
 
 
   voronoi(windowWidth, windowHeight, true);
   var diagram = voronoiGetDiagram();
+  let cellArray = voronoiGetCellsJitter();
+
   append(cells,diagram.cells[0]);
-  //jitter = voronoiGetCellsJitter();
-  append(jitter, voronoiGetCellsJitter());
+  append(jitter, cellArray);
+
+  function isNotEmpty(x) {
+    return x.length > 0;
+  }
+  var notEmptyCells = cellArray.filter(isNotEmpty);
+  var subCell = notEmptyCells[round(random(0,notEmptyCells.length - 1))];
+  let pointOnLine = subCell[round(random(0,subCell.length - 1))];
+  spider = new spiderCircle(pointOnLine[0],pointOnLine[1]);
+
+
+
+
   //console.log(jitter);
   //console.log(jitter[0][1]);
+
+//spider scene global vars
 
 
 }

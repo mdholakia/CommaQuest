@@ -18,7 +18,8 @@ var specialTreeY;
 var specialTreeX;
 var specialTreeSize;
 let fruit;
-
+var spiderClickCounter;
+var spider;
 //scene 3
 
 let jitter = [];
@@ -28,8 +29,7 @@ function setup() {
   // put setup code here
   textFont("Stoke");
   createCanvas(windowWidth, windowHeight);
-  backgroundColor= color(227, 227, 216);
-
+  backgroundColor= color(220);
 sceneMargin = (windowWidth - windowWidth/2)/2;
 sceneTopMargin = windowHeight/5;
 
@@ -41,7 +41,7 @@ specialTreeY = sceneBottomMargin - 30;
 specialTreeX= windowWidth * 2/3 - 50;
 specialTreeSize = 600;
 fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
-
+spiderClickCounter = 2;
 webSet();
 
 //set first item in array to be number of snowflakes
@@ -61,7 +61,7 @@ function draw() {
 //background(155,155,155);
 
 background(backgroundColor);
-//background(247, 246, 230);
+background(247, 246, 230);
 //background(3, 34, 87);
   // put drawing code here
   noStroke();
@@ -170,22 +170,19 @@ specialTree();
 
 
 function sceneTest() {
-  face.leftEye = true;
-  face.move(500);
-  face.display();
+  // face.leftEye = true;
+  // face.move(500);
+  // face.display();
+  cursor();
 
+
+
+let c = color(get(windowWidth/2, windowHeight/2));
+  //console.log(c);
+let black = color(0,0,0,255);
    push();
-   //translate(sceneMargin,sceneTopMargin);
 
- 	// voronoiDraw(0, 0, false, true);
-//
-  //draw a mask to block out border
-  // noFill();
-  // strokeWeight(10);
-  // stroke(backgroundColor);
-  // rect(0,0,700,500);
-  // stroke(0);
-  // strokeWeight(1);
+fill(0);
 
 
     let cellArray = jitter[0];
@@ -201,22 +198,32 @@ function sceneTest() {
             let p2 = subCell[j+1];
 
 
-            strokeWeight(.5);
+            strokeWeight(1);
             // if(i == 4) {
             //   stroke(255);
             // }
             stroke(0);
+
+
             //heal the web by decreasing the "gap effect with modulo " i controls whole sections. j controls part of the line.
-            if(j%4 ==0) {
-              stroke(color(10,0,255));
+            if(i% spiderClickCounter ==0) {
+
+            }
+            else {
+             line(p1[0],p1[1],p2[0],p2[1]);
             }
 
-            line(p1[0],p1[1],p2[0],p2[1]);
-
-
           }
-        }
-        
 
+        }
+
+        //draw a line in the middle
+        // strokeWeight(50);
+        // stroke(0);
+        // line(0,windowHeight/2,windowWidth,windowHeight/2);
+
+        //draw a spider
+          spider.follow();
+          spider.move();
 
 }

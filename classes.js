@@ -277,3 +277,92 @@ function specialTree () {
 
 
           }
+
+class spiderCircle {
+  constructor(x,y) {
+    this.x = x;
+    this.y = y
+    this.lastMove = [x,y];
+  }
+
+  move() {
+    fill(0)
+    rectMode(CORNER)
+    rect(this.x,this.y,25,25)
+  }
+
+  colorMatch(x,y) {
+    let black = color(0,0,0,255);
+    let nextColor = color(get(x,y));
+
+    // console.log("this is black" + black.toString());
+    // console.log("this is next pixel" + nextColor.toString());
+    if (black.toString() ==  nextColor.toString()) {
+      return true;
+
+    }
+    else {
+      return false;
+    }
+  }
+  follow() {
+    let tempX = this.x;
+    let tempY = this.y;
+//gotta check it against our last move;
+    if(this.colorMatch(this.x +1, this.y)) {
+      this.x = this.x + 1;
+    }
+
+    else {
+        if(this.colorMatch(this.x +1, this.y + 1)) {
+              this.x = this.x + 1;
+              this.y = this.y + 1;
+        }
+
+          else {
+            if(this.colorMatch(this.x +1, this.y - 1)) {
+                  this.x = this.x + 1;
+                  this.y = this.y - 1;
+            }
+
+            else {
+              if(this.colorMatch(this.x, this.y - 1)) {
+
+                //checking if we're going in a loop
+                if ((this.lastMove[0] === this.x) && (this.lastMove[1] === this.y - 1)) {
+                  this.x = this.x + 1;
+                }
+
+                //otherwise do our regular move
+                else {
+                    this.y = this.y - 1;
+                }
+
+
+
+              }
+              else {
+                if(this.colorMatch(this.x, this.y + 1)) {
+                    //
+                    this.y = this.y + 1;
+                }
+
+                else {
+
+                }
+
+
+              }
+
+            }
+
+
+          }
+    }
+
+    this.lastMove[0] = tempX;
+    this.lastMove[1] = tempY;
+
+  }
+
+}
