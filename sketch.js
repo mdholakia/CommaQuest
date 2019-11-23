@@ -18,12 +18,16 @@ var specialTreeY;
 var specialTreeX;
 var specialTreeSize;
 let fruit;
-var spiderClickCounter;
-var spider;
+
+
 //scene 3
 
 let jitter = [];
 let cells = [];
+var spiderClickCounter;
+var spider;
+var allPairs = {};
+
 function setup() {
 
   // put setup code here
@@ -174,7 +178,7 @@ function sceneTest() {
   // face.move(500);
   // face.display();
   cursor();
-
+voronoiDraw();
 
 
 let c = color(get(windowWidth/2, windowHeight/2));
@@ -186,10 +190,15 @@ fill(0);
 
 
     let cellArray = jitter[0];
+
+
     for (i = 0; i < (cellArray.length); i ++) {
+
+
 
         let subCell = cellArray[i];
         //console.log(subCell)
+
 
           for (j = 0; j < subCell.length - 1; j+=1) {
 
@@ -223,7 +232,7 @@ fill(0);
         // line(0,windowHeight/2,windowWidth,windowHeight/2);
 
         //draw a spider
-          spider.follow();
-          spider.move();
+        spider.follow();
+        spider.move();
 
 }

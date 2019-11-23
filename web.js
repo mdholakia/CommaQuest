@@ -73,13 +73,39 @@ for (angle1 = 0; angle1 < TWO_PI*spirals1; angle1 = angle1 + .1) {
   append(cells,diagram.cells[0]);
   append(jitter, cellArray);
 
-  function isNotEmpty(x) {
-    return x.length > 0;
+  // step 1, build up everything
+  for (i = 0; i < (cellArray.length); i ++) {
+    let subCell = cellArray[i];
+    for (j = 0; j < subCell.length - 1; j+=1) {
+      let p1 = subCell[j];
+      let p2 = subCell[j+1];
+      let p1Paths = allPairs[p1.map(floor)] || [];
+      let p2Paths = allPairs[p2.map(floor)] || [];
+      p1Paths.push(p2.map(floor));
+      p2Paths.push(p1.map(floor));
+      allPairs[p1.map(floor)] = p1Paths;
+      allPairs[p2.map(floor)] = p2Paths;
+    }
   }
-  var notEmptyCells = cellArray.filter(isNotEmpty);
-  var subCell = notEmptyCells[round(random(0,notEmptyCells.length - 1))];
-  let pointOnLine = subCell[round(random(0,subCell.length - 1))];
-  spider = new spiderCircle(pointOnLine[0],pointOnLine[1]);
+
+  var firstPair = Object.entries(allPairs)[0]
+  var firstValue = firstPair[1][0];
+  spider = new spiderCircle(firstValue[0], firstValue[1])
+
+
+  // step 2, plan the spiders path
+
+
+  // SAD:FLJSD:LFKJ
+  // function isOkToDraw(x, index) {
+  //   return index % 2 == 1 &&  x.length > 0;
+  // }
+  // allCells = cellArray.filter(isOkToDraw);
+  // allCellsIndex = 0;
+  // spiderPath = allCells[allCellsIndex];
+  // spiderPathIndex = 0;
+  // let pointOnLine = spiderPath[spiderPathIndex];
+  // spider = new spiderCircle(pointOnLine[0],pointOnLine[1]);
 
 
 

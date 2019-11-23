@@ -287,7 +287,7 @@ class spiderCircle {
 
   move() {
     fill(0)
-    rectMode(CORNER)
+    rectMode(CENTER);
     rect(this.x,this.y,25,25)
   }
 
@@ -305,63 +305,104 @@ class spiderCircle {
       return false;
     }
   }
+
+
+
   follow() {
-    let tempX = this.x;
-    let tempY = this.y;
-//gotta check it against our last move;
-    if(this.colorMatch(this.x +1, this.y)) {
-      this.x = this.x + 1;
-    }
+    var allConnecting = allPairs[[floor(this.x), floor(this.y)]]
+    var index = 0;
+    while(this.x >= allConnecting[index][0]) {
+      index +=1;
+      if (index>allConnecting.length) {
 
-    else {
-        if(this.colorMatch(this.x +1, this.y + 1)) {
-              this.x = this.x + 1;
-              this.y = this.y + 1;
-        }
-
-          else {
-            if(this.colorMatch(this.x +1, this.y - 1)) {
-                  this.x = this.x + 1;
-                  this.y = this.y - 1;
-            }
-
-            else {
-              if(this.colorMatch(this.x, this.y - 1)) {
-
-                //checking if we're going in a loop
-                if ((this.lastMove[0] === this.x) && (this.lastMove[1] === this.y - 1)) {
-                  this.x = this.x + 1;
-                }
-
-                //otherwise do our regular move
-                else {
-                    this.y = this.y - 1;
-                }
-
-
-
-              }
-              else {
-                if(this.colorMatch(this.x, this.y + 1)) {
-                    //
-                    this.y = this.y + 1;
-                }
-
-                else {
-
-                }
-
-
-              }
-
-            }
-
+        let keys =  Object.keys(allPairs);
+        let closestNode = keys[0];
+        for(i = 1; i <keys.length ; i++  ) {
+          if((keys[i] - this.x) < (closetNode - this.x) ) {
+            closestNode = keys[i];
 
           }
-    }
+          this.x = closestNode;
+          return; 
+        }
 
-    this.lastMove[0] = tempX;
-    this.lastMove[1] = tempY;
+
+
+      }
+      if (this.x >= windowWidth) {
+        return;
+      }
+    }
+    this.x = allConnecting[index][0];
+    this.y = allConnecting[index][1];
+    // ATTEMPT #2
+    // var x = spiderPath[spiderPathIndex % spiderPath.length][0];
+    // spiderPathIndex++;
+    // if (x > this.x) {
+    //   this.x = x;
+    //   this.y = spiderPath[spiderPathIndex % spiderPath.length][1]
+    // } else if (allCellsIndex < allCells.length - 1) {
+    //   allCellsIndex++;
+    //   spiderPath = allCells[allCellsIndex];
+    // }
+
+// ATTEMPT #1; follow the black parts
+//     let tempX = this.x;
+//     let tempY = this.y;
+// //gotta check it against our last move;
+//     if(this.colorMatch(this.x +1, this.y)) {
+//       this.x = this.x + 1;
+//     }
+//
+//     else {
+//         if(this.colorMatch(this.x +1, this.y + 1)) {
+//               this.x = this.x + 1;
+//               this.y = this.y + 1;
+//         }
+//
+//           else {
+//             if(this.colorMatch(this.x +1, this.y - 1)) {
+//                   this.x = this.x + 1;
+//                   this.y = this.y - 1;
+//             }
+//
+//             else {
+//               if(this.colorMatch(this.x, this.y - 1)) {
+//
+//                 //checking if we're going in a loop
+//                 if ((this.lastMove[0] === this.x) && (this.lastMove[1] === this.y - 1)) {
+//                   this.x = this.x + 1;
+//                 }
+//
+//                 //otherwise do our regular move
+//                 else {
+//                     this.y = this.y - 1;
+//                 }
+//
+//
+//
+//               }
+//               else {
+//                 if(this.colorMatch(this.x, this.y + 1)) {
+//                     //
+//                     this.y = this.y + 1;
+//                 }
+//
+//                 else {
+//
+//                 }
+//
+//
+//               }
+//
+//             }
+//
+//
+//           }
+//     }
+//
+//     this.lastMove[0] = tempX;
+//     this.lastMove[1] = tempY;
 
   }
 
