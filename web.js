@@ -57,7 +57,7 @@ for (angle1 = 0; angle1 < TWO_PI*spirals1; angle1 = angle1 + .1) {
 
    if(noise(x1,y1) > .4 ) {
     voronoiSite(x1 ,y1);
-    console.log("new spiral");
+
 
     //append(cells,voronoiGetSite(x, y, false));
 
@@ -68,29 +68,91 @@ for (angle1 = 0; angle1 < TWO_PI*spirals1; angle1 = angle1 + .1) {
 
   voronoi(windowWidth, windowHeight, true);
   var diagram = voronoiGetDiagram();
-  let cellArray = voronoiGetCellsJitter();
-
+  let cellArray = voronoiGetCells();
+  let cellArrayJitter = voronoiGetCellsJitter()
   append(cells,diagram.cells[0]);
-  append(jitter, cellArray);
+  append(jitter, cellArrayJitter);
 
   // step 1, build up everything
+  //WITH FLOORING
+
+  let foundP1 = false;
+  let firstPoint;
   for (i = 0; i < (cellArray.length); i ++) {
     let subCell = cellArray[i];
-    for (j = 0; j < subCell.length - 1; j+=1) {
-      let p1 = subCell[j];
-      let p2 = subCell[j+1];
+    for (j = 0; j < subCell.length; j+=1) {
+      if(!foundP1 && (subCell[j][0] < windowWidth/4)) {
+        firstPoint = subCell[j];
+        foundP1 = true;
+      }
+      let p1;
+      let p2;
+      //exit case to connect the last segment to the first segment
+      if(j == subCell.length - 1) {
+        p1 = subCell[j];
+        p2 = subCell[0];
+
+      }
+      else {
+         p1 = subCell[j];
+         p2 = subCell[(j+1)];
+      }
+
       let p1Paths = allPairs[p1.map(floor)] || [];
-      let p2Paths = allPairs[p2.map(floor)] || [];
+      //let p2Paths = allPairs[p2.map(floor)] || [];
       p1Paths.push(p2.map(floor));
-      p2Paths.push(p1.map(floor));
+      //p2Paths.push(p1.map(floor));
       allPairs[p1.map(floor)] = p1Paths;
-      allPairs[p2.map(floor)] = p2Paths;
+      //allPairs[p2.map(floor)] = p2Paths;
     }
   }
+  console.log(firstPoint);
+  var allConnecting = allPairs[[floor(firstPoint[0]), floor(firstPoint[1])]]
+
+
+
+  spider  = new crawler(floor(firstPoint[0]),floor(firstPoint[1]), floor(allConnecting[0][0]),floor(allConnecting[0][1]));
+
+  //
+  // //WITH FLOORING
+  // for (i = 0; i < (cellArray.length); i ++) {
+  //   let subCell = cellArray[i];
+  //   for (j = 0; j < subCell.length; j+=1) {
+  //     let p1 = subCell[j];
+  //     let p2 = subCell[(j+1) % subCell.length];
+  //     //is this what is causing our strings?
+  //     let p1Paths = allPairs[p1.map(floor)] || [];
+  //     let p2Paths = allPairs[p2.map(floor)] || [];
+  //     p1Paths.push(p2.map(floor));
+  //     p2Paths.push(p1.map(floor));
+  //     allPairs[p1.map(floor)] = p1Paths;
+  //     allPairs[p2.map(floor)] = p2Paths;
+  //   }
+  // }
+
+
+  //check if things are types
+  // let keys =  Object.keys(allPairs);
+  // for(i = 0; i <keys.length ; i++  ) {
+  //
+  //     //this is x
+  //
+  //     if((typeof keys[i][0] != "number" || typeof keys[i][1] != "number"   )) {
+  //       console.log ("this is the node  "  + i + "  x val  " + keys[i][0] + "  y val  " + keys[i][1]);
+  //
+  //     }
+  //
+  //
+  //       }
+
 
   var firstPair = Object.entries(allPairs)[0]
+
+
   var firstValue = firstPair[1][0];
-  spider = new spiderCircle(firstValue[0], firstValue[1])
+  // console.log(cellArray);
+  // spider = new spiderCircle(firstValue[0], firstValue[1])
+  //spider = new spiderCircle(firstPoint[0], firstPoint[1])
 
 
   // step 2, plan the spiders path

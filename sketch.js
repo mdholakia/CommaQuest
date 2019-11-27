@@ -27,13 +27,16 @@ let cells = [];
 var spiderClickCounter;
 var spider;
 var allPairs = {};
+let amount = .2;
+var pointX;
+var pointY;
 
 function setup() {
 
   // put setup code here
   textFont("Stoke");
   createCanvas(windowWidth, windowHeight);
-  backgroundColor= color(220);
+  backgroundColor= color(247, 246, 230  );
 sceneMargin = (windowWidth - windowWidth/2)/2;
 sceneTopMargin = windowHeight/5;
 
@@ -43,9 +46,12 @@ face = new face(windowWidth/2, windowHeight/2,50);
 frame = new screen();
 specialTreeY = sceneBottomMargin - 30;
 specialTreeX= windowWidth * 2/3 - 50;
-specialTreeSize = 600;
+specialTreeSize = windowHeight/1.8;
 fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
 spiderClickCounter = 2;
+pointX = windowWidth;
+pointY = windowHeight;
+
 webSet();
 
 //set first item in array to be number of snowflakes
@@ -65,7 +71,7 @@ function draw() {
 //background(155,155,155);
 
 background(backgroundColor);
-background(247, 246, 230);
+//background(247, 246, 230);
 //background(3, 34, 87);
   // put drawing code here
   noStroke();
@@ -126,7 +132,7 @@ face.display();
   var hSpace = 80;
   var vSpace = 60;
   var row;
-  var size = 280;
+  var originalSize = windowHeight/3.8;
 
   //base number of rows off height of window
   var treeRows = 5;
@@ -137,10 +143,12 @@ face.display();
   //Seed the noise field so we get the same noise values & forest each time
   noiseSeed(48);
 
+
+
   for(var i = 0; i < treeRows*itemsInRow; i++ ) {
 
     row = floor(i/itemsInRow);
-    size = 280+row*20;
+    let size = originalSize+row*20;
     var x = (i%itemsInRow)*hSpace + startPoint + noise(i)*noiseAmp;
   //  var y = sceneBottomMargin - vSpace*row + noise(i)*noiseAmp;
     var y = sceneBottomMargin - vSpace*row + 10;
@@ -173,10 +181,10 @@ specialTree();
 }
 
 
-function sceneTest() {
-  // face.leftEye = true;
-  // face.move(500);
-  // face.display();
+function sceneTwo() {
+  face.leftEye = true;
+  face.move(500);
+  face.display();
   cursor();
 voronoiDraw();
 
@@ -202,12 +210,12 @@ fill(0);
 
           for (j = 0; j < subCell.length - 1; j+=1) {
 
+            //so we get clean numbers that match what our spider is moving on.
+            let p1 = subCell[j].map(floor);
+            let p2 = subCell[j+1].map(floor);
 
-            let p1 = subCell[j];
-            let p2 = subCell[j+1];
 
-
-            strokeWeight(1);
+            strokeWeight(2);
             // if(i == 4) {
             //   stroke(255);
             // }
@@ -232,7 +240,19 @@ fill(0);
         // line(0,windowHeight/2,windowWidth,windowHeight/2);
 
         //draw a spider
-        spider.follow();
-        spider.move();
+        spider.display();
+
+}
+
+function sceneTest() {
+
+let v1 = createVector(0,0);
+let v2 = createVector(windowWidth/2,windowHeight/2);
+stroke(0);
+strokeWeight(10);
+line(v1.x,v1.y,v2.x,v2.y );
+
+
+
 
 }

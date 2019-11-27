@@ -59,7 +59,7 @@ function  displayCheck() {
     }
     //if scene is with trees in which case add that
 
-    if ((drawCase == 1 && mouseY < 792) || !(inBounds(mouseX,mouseY))) {
+    if ((drawCase == 1) && (mouseY < 500)) {
       console.log("im here");
       return false;
     }
@@ -84,4 +84,5 @@ function mouseClickedSceneOne() {
 
 function mouseClickedSceneTwo() {
   spiderClickCounter = spiderClickCounter * 2;
+  spider.moveBool = true; 
 }
