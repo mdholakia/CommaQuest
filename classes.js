@@ -4,6 +4,7 @@ class face {
 constructor (xpos,ypos, radius) {
 
   this.radius = 50;
+  this.hasMoved = false;
   this.x = xpos;
   this.y = ypos;
   this.leftEye = false;
@@ -54,14 +55,29 @@ constructor (xpos,ypos, radius) {
         }
         //For Scene one
         moveShrink() {
+          // TODO reevaluate if this random number strategy feels good
+          let footstepKey = floor(Math.random()*2);
+          this.hasMoved = this.x != mouseX && this.y != mouseY;
           this.x = mouseX;
           this.y = mouseY;
           this.radius = map(mouseY,200,windowHeight-200,0,100);
-          // TODO: Need to only play this sound if the face has moved. Also need to quiet this sound the farther the face is
-          // Write a function that will toggle a boolean called hasMoved to either true or false based on the x and y deltas
+          // TODO: Need to quiet this sound the farther the face is
           // Write a function that does something like the map function but mapping audio volume to windowHeight and Y
-          if (!brush1.isPlaying()) {
-            brush1.play();
+          if (this.hasMoved) {
+            this.playFootstep(footstepKey)
+          }
+        }
+
+        playFootstep(footstepKey) {
+          if (!brush1.isPlaying() && !brush2.isPlaying()) {
+            switch(footstepKey) {
+              case 0:
+                brush1.play();
+                break;
+              case 1:
+                brush2.play();
+                break;
+            }
           }
         }
 

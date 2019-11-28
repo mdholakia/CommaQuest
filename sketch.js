@@ -3,12 +3,17 @@
 // Stuck on how to implement forest and indicate that one tree in particular can be "shaken"
 
 var ambience;
+var brush1;
+var brush2;
 
 function preload() {
   // TODO: See if we can only load the needed sounds for any given scence
   ambience = loadSound('Assets/Sounds/Scene1/ambience.mp3');
+  ambience.setVolume(0.1);
   brush1 = loadSound('Assets/Sounds/Scene1/brush1.mp3');
-  brush2 = loadSound('Assets/Sounds/Scene1/brush2.mp3');
+  brush1.setVolume(1);
+  brush2 = loadSound('Assets/Sounds/Scene1/brush3.mp3');
+  brush2.setVolume(1);
 }
   var backgroundColor;
   var textCase = 0;
