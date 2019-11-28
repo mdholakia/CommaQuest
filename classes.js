@@ -57,7 +57,12 @@ constructor (xpos,ypos, radius) {
           this.x = mouseX;
           this.y = mouseY;
           this.radius = map(mouseY,200,windowHeight-200,0,100);
-
+          // TODO: Need to only play this sound if the face has moved. Also need to quiet this sound the farther the face is
+          // Write a function that will toggle a boolean called hasMoved to either true or false based on the x and y deltas
+          // Write a function that does something like the map function but mapping audio volume to windowHeight and Y
+          if (!brush1.isPlaying()) {
+            brush1.play();
+          }
         }
 
 

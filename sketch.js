@@ -2,9 +2,13 @@
 // Note:
 // Stuck on how to implement forest and indicate that one tree in particular can be "shaken"
 
-
+var ambience;
 
 function preload() {
+  // TODO: See if we can only load the needed sounds for any given scence
+  ambience = loadSound('Assets/Sounds/Scene1/ambience.mp3');
+  brush1 = loadSound('Assets/Sounds/Scene1/brush1.mp3');
+  brush2 = loadSound('Assets/Sounds/Scene1/brush2.mp3');
 }
   var backgroundColor;
   var textCase = 0;
@@ -18,7 +22,6 @@ var specialTreeY;
 var specialTreeX;
 var specialTreeSize;
 let fruit;
-
 
 //scene 3
 
@@ -65,8 +68,6 @@ for (let i = 1; i < snowFall[0]; i++) {
 
 }
 function draw() {
-
-
   //setGradient(0, windowWidth, 0, windowHeight, c1, c2, Y_AXIS);
 //background(155,155,155);
 
@@ -75,6 +76,7 @@ background(backgroundColor);
 //background(3, 34, 87);
   // put drawing code here
   noStroke();
+  drawCase = 0;
   frame.display();
   stroke(0);
 
@@ -83,7 +85,10 @@ background(backgroundColor);
 }
 
 function sceneZero() {
-
+  // TODO: Decide if we want ambience to never stop and to overlap upon itself
+  if (!ambience.isPlaying()) {
+    ambience.play();
+  }
 
               var noiseAmp = 24;
               var hSpace = 24;
@@ -187,6 +192,7 @@ function sceneTwo() {
   face.display();
   cursor();
 voronoiDraw();
+
 
 
 let c = color(get(windowWidth/2, windowHeight/2));
