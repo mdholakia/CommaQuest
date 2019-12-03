@@ -1,14 +1,16 @@
 //Classes.js includes all custom classes for Comma Quest
 
-class face {
-constructor (xpos,ypos, radius) {
+class smileyFace {
+constructor(xpos,ypos, radius) {
 
-  this.radius = 50;
+  this.radius = 25;
   this.x = xpos;
   this.y = ypos;
   this.leftEye = false;
   this.rightEye = false;
   this.mouth = false;
+  this.upsideDownMouth = false;
+  this.nose = true;
 
 }
   move(rad) {
@@ -18,46 +20,149 @@ constructor (xpos,ypos, radius) {
 
   }
 
+  mountainMove(lerpFactor) {
+    this.x = mouseX
+    const yMap = map(lerpFactor, 0, 1, 0, Math.PI / 2)
+    this.y = windowHeight - Math.sin(yMap) * 400 - 50
+  }
 
-   display(){
+  display(rad) {
+if(rad!= null){
+this.radius = rad;
+
+}
+
      noCursor();
-      if(displayCheck()){
-      fill(255);
-      noStroke();
-      circle(this.x,this.y,this.radius);
+     noStroke();
+     textFont('Caveat Brush');
+     fill(255);
+     noStroke();
+     circle(this.x,this.y,this.radius);
 
-              if (this.leftEye) {
-                noStroke();
-                fill(0);
-                var leftX = (this.x - (.2*this.radius));
-                var leftY= (this.y - (.1*this.radius));
-                circle(leftX,leftY,3);
-              }
+     beginShape();
+     for(var i = 0; i < TWO_PI ; i+=.3) {
+       let xOff = map(noise(i) * sin(i*4),-1,1,-3,3);
+       let yOff = map(noise(i) * sin(i*4),-1,1,-3,3);
+       let x = this.x +xOff + (this.radius -20) * cos(i);
+       let y = this.y +yOff + (this.radius - 20) * sin(i );
+       vertex(x, y);
+     }
 
-              if (this.rightEye) {
-                noStroke();
-                fill(0);
-                var rightX = (this.x + (.2*this.radius));
-                var rightY= (this.y - (.1*this.radius));
-                circle(rightX,rightY,3);
-              }
+     endShape();
 
-              if(this.mouth) {
-                noFill();
-              stroke(0);
-                  arc(this.x, this.y + .1*this.radius, 2*(leftX-this.x),15,0, PI);
-              noStroke();
-              }
+     if (this.leftEye) {
+       noStroke();
+       fill(0);
+       var leftX = (this.x - (.3*this.radius));
+       var leftY= (this.y - (.08*this.radius));
+       drawPunct(".",this.radius/2.5,leftX,leftY,20)
 
-            stroke(0);
-          }
+       //circle(leftX,leftY,this.radius/30);
+     }
+
+     if (this.rightEye) {
+       noStroke();
+       fill(0);
+       var rightX =(this.x + (.3*this.radius));
+       var rightY=(this.y - (.08*this.radius));
+       drawPunct(".",this.radius/2.5,rightX,rightY,20)
+
+     }
+
+     if(this.mouth) {
+       noFill();
+     stroke(2);
+         arc(this.x, this.y + .12*this.radius, 1.5*(leftX-this.x),this.radius/3 ,0, PI);
+         //inverse mouth
+
+
+     noStroke();
+     }
+
+     if(this.upsideDownMouth) {
+
+       noFill();
+     stroke(2);
+          arc(this.x, this.y  + .3*this.radius, 1.5*(leftX-this.x),this.radius/3,PI, TWO_PI);
+
+     }
+
+     if(this.nose) {
+       drawPunct("[",this.radius/2.5,this.x - (.05*this.radius),(this.y +(.02*this.radius))  ,20);
+       drawPunct("] ",this.radius/2.5,this.x + (.05*this.radius),(this.y + (.02*this.radius)),20)
+
+     }
+
+
+
+
+   }
+
+
+        inverseDisplay(rad){
+
+        if(rad!= null){
+        this.radius = rad;
+      }
+          noCursor();
+           if(displayCheck()){
+           fill(255);
+           push()
+           translate(this.x, this.y);
+           var oldX = this.x;
+           var oldY = this.y;
+
+           rotate(PI);
+           this.x = 0;
+           this.y = 0;
+              this.display(rad);
+
+          pop();
+          this.x = oldX;
+          this.y = oldY;
         }
+           // noStroke();
+           // circle(this.x,this.y,this.radius);
+           //
+           //         if (this.leftEye) {
+           //           noStroke();
+           //           fill(0);
+           //           var leftX = (this.x - (.2*this.radius));
+           //           var leftY= (this.y + (.1*this.radius));
+           //           circle(leftX,leftY,this.radius/30);
+           //         }
+           //
+           //         if (this.rightEye) {
+           //           noStroke();
+           //           fill(0);
+           //           var rightX = (this.x + (.2*this.radius));
+           //           var rightY= (this.y + (.1*this.radius));
+           //           circle(rightX,rightY,this.radius/30);
+           //         }
+           //
+           //         if(this.mouth) {
+           //           noFill();
+           //         stroke(0);
+           //             arc(this.x, this.y - .1*this.radius, 2*(leftX-this.x),15,0, PI);
+           //         noStroke();
+           //         }
+           //
+           //       stroke(0);
+           //     }
+             }
+
         //For Scene one
         moveShrink() {
           this.x = mouseX;
           this.y = mouseY;
           this.radius = map(mouseY,200,windowHeight-200,0,100);
 
+        }
+
+        follow() {
+          //this.x = mouseX * (.98 + noise(this.x,this.x)/100);
+          this.x = mouseX + map(sin(millis()/400*cos(i)),-1,1,-10,10)
+          this.y = mouseY + 150;
         }
 
 
@@ -294,7 +399,29 @@ class crawler {
               this.step = .1;
               this.moveBool = true;
             }
+    body(x,y) {
+      textFont("Stoke");
+      push();
 
+      fill(7);
+      circle(x,y,50);
+      angleMode(DEGREES);
+      for (var l = 0; l < 360 ; l+= 40) {
+        stroke(7);
+        strokeWeight(3);
+        line(x,y, x + 60*cos(l),y + sin(l)*60);
+        line(x + 60*cos(l),y + sin(l)*60,x + 60*cos(l) + 10*cos(l), y + sin(l)*60 );
+
+      }
+      drawPunct(")",10,x + 5, y - 7,255);
+      drawPunct(")",10,x + 5, y + 9,255);
+      if(!this.moveBool) {
+
+        drawPunct("-- %$%^$",random(18,20),x + 100, y,random(2,10));
+
+
+      }
+    }
 
     display() {
 
@@ -307,11 +434,12 @@ class crawler {
       if(this.step >= 1) {
         this.nextPoint();
       }
-      circle(v3.x,v3.y,24);
+
+      this.body(v3.x,v3.y);
     }
 
     else {
-            circle(this.x1,this.y1,24);
+      this.body(this.x1,this.y1);
 
     }
     }
@@ -339,6 +467,7 @@ class crawler {
             //&& !(xTest == this.x1 && yTest == this.y1)
             //if we shouldn't be moving
             if(!this.moveBool) {
+
               return;
             }
             if(this.x1 >= windowWidth) {
@@ -361,10 +490,15 @@ class crawler {
                         //if we do have a rightmove already
                         else {
                           //flip a coin
-                          let r = random(0,1);
-                          if (r > .5) {
+
+                          if (abs(rightMove[1] - windowWidth/2) > abs(allConnecting[index][1] -windowWidth/2)) {
+
                             rightMove = allConnecting[index]
+
                           }
+                          // let r = random(0,1);
+                          // if (r > .5) {
+                          // }
 
                           }
 

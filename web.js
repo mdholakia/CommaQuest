@@ -81,7 +81,7 @@ for (angle1 = 0; angle1 < TWO_PI*spirals1; angle1 = angle1 + .1) {
   for (i = 0; i < (cellArray.length); i ++) {
     let subCell = cellArray[i];
     for (j = 0; j < subCell.length; j+=1) {
-      if(!foundP1 && (subCell[j][0] < windowWidth/4)) {
+      if(!foundP1 && (subCell[j][0] < windowWidth/4) && (subCell[j][1] > 60)) {
         firstPoint = subCell[j];
         foundP1 = true;
       }
