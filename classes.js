@@ -208,7 +208,7 @@ class screen {
 
             case 3:
 
-            sceneTest();
+            sceneThree();
               break;
             }
 
