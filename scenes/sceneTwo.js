@@ -1,16 +1,17 @@
 function SceneTwo() {
+  let faceTwo;
   var snowFall = [];
   var specialTreeY;
   var specialTreeX;
   var specialTreeSize;
   let fruit;
-  let inverseFace;
   this.preload = () => {
 
   }
 
   this.setup = () => {
     specialTreeY = sceneBottomMargin - 30;
+    faceTwo = new smileyFace(sceneTopMargin,sceneBottomMargin - 10,50);
     specialTreeX= windowWidth * 2/3 - 50;
     specialTreeSize = windowHeight/1.8;
     fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
@@ -24,10 +25,10 @@ function SceneTwo() {
 
 
   this.draw = () => {
-    clear();
-    //display our character on our cursor
-    face.move(50);
-    face.display(50);
+  //   noCursor();
+  //   //display our character on our cursor
+    moveTwo(faceTwo);
+    faceTwo.display(50);
     textFont("Amatic SC");
     var noiseAmp = 45;
     var hSpace = 80;
@@ -37,12 +38,12 @@ function SceneTwo() {
     var treeRows = 5;
     var itemsInRow = 15;
     var startPoint = sceneMargin;
-
-    //Seed the noise field so we get the same noise values & forest each time
-    noiseSeed(48);
-
-
-
+  //
+  //   //Seed the noise field so we get the same noise values & forest each time
+     noiseSeed(48);
+  //
+  //
+  //
     for(var i = 0; i < treeRows*itemsInRow; i++ ) {
 
       row = floor(i/itemsInRow);
@@ -81,14 +82,14 @@ function SceneTwo() {
 
 this.mouseClicked = () => {
 
-  if((mouseX < specialTreeX + 50) && (mouseX > specialTreeX - 50) && !fruit.fallen) {
+  if((mouseX < specialTreeX + 100) && (mouseX > specialTreeX - 100) && !fruit.fallen) {
     fruit.fall();
   }
 
   //testing if you are eating the fruit
   else if(fruit.fallen && Math.abs(mouseX - fruit.x) < 50 && Math.abs(mouseY - fruit.y) < 50) {
     console.log("Eating fruit");
-    face.leftEye = true;
+    faceTwo.leftEye = true;
     fruit.eaten = true;
   }
 
@@ -185,7 +186,7 @@ function specialTree () {
     drawPunct("Y",specialTreeSize,specialTreeX,specialTreeY,7);
     treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
     fruit.draw();
-
+    faceTwo.display();
   }
 }
 
@@ -226,5 +227,19 @@ class specialFruit {
       }
 
     }
+  }
+
+  function moveTwo(face) {
+  face.x = mouseX;
+    face.y = mouseY;
+  if(mouseY < windowWidth/2) {
+    //map the face value back down
+    face.y = windowWidth/2
+  }
+  if(mouseY >sceneBottomMargin) {
+    face.y = sceneBottomMargin;
+  }
+
+
   }
 }

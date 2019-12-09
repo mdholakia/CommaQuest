@@ -1,4 +1,6 @@
 function SceneThree() {
+
+let facethree;
 const stars = []
 
   this.preload = () => {
@@ -12,6 +14,7 @@ const stars = []
         y: random(0, windowHeight)
         })
     }
+  faceThree = new smileyFace(sceneMargin,windowHeight - sceneBottomMargin, 30);
   }
 
 
@@ -41,21 +44,23 @@ const stars = []
         circle(star.x,star.y,random(0,3));
       }
 
-      fill(0);
-      arc(windowWidth/2, windowHeight, windowWidth - sceneMargin*2,windowHeight + 200  ,PI, TWO_PI);
+      fill(backgroundColor);
+      //  arc(windowWidth/2, windowHeight, windowWidth - sceneMargin*2,windowHeight  ,PI, TWO_PI);
 
       randomSeed(10);
       for (let x = sceneMargin; x < windowWidth - sceneMargin; x+=1) {
         const yMap = map(getLerpFactor(x,windowWidth/2,mountainWidth), 0, 1, 0, Math.PI / 2)
         const y = windowHeight - Math.sin(yMap) * 400 - 50
         // draw punc at x, y
-        let mountainColor = color(3, random(40,70), random(40,70));
-        drawPunct("^",round(random(50,70)),x - 10,random(y ,windowHeight),mountainColor);
+
+        let mountainColor = color(3 + map(mouseY,0,windowHeight,0,30), random(40,70) + map(mouseY,0,windowHeight,0,30), random(40,70) - map(mouseY,0,windowHeight,0,20));
+        drawPunct("^",round(random(50,70)),x - 10,random(y ,windowHeight),mountainColor)
       }
 
-    face.leftEye= true;
-    face.display(30);
-    face.mountainMove(interpolationFactor);
+    faceThree.leftEye= true;
+    angleMode(RADIANS);
+    faceThree.display(25);
+    moveThree(interpolationFactor, faceThree);
 
 
   }
@@ -78,4 +83,10 @@ const stars = []
     return 0
   }
 
+function  moveThree(lerpFactor, face) {
+    angleMode(RADIANS);
+    face.x = mouseX
+    const yMap = map(lerpFactor, 0, 1, 0, Math.PI / 2)
+    face.y = windowHeight - Math.sin(yMap) * 400 - 50
+  }
 }

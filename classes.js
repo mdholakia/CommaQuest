@@ -10,88 +10,86 @@ constructor(xpos,ypos, radius) {
   this.rightEye = false;
   this.mouth = false;
   this.upsideDownMouth = false;
-  this.nose = true;
+  this.nose = false;
 
 }
-  move(rad) {
-  this.x = mouseX;
-  this.y = mouseY;
-  this.radius = rad;
+  move(rad,face) {
+  face.x = mouseX;
+  face.y = mouseY;
+  face.radius = rad;
 
   }
 
-  mountainMove(lerpFactor) {
-    this.x = mouseX
+  mountainMove(lerpFactor, face) {
+    angleMode(RADIANS);
+    face.x = mouseX
     const yMap = map(lerpFactor, 0, 1, 0, Math.PI / 2)
-    this.y = windowHeight - Math.sin(yMap) * 400 - 50
+    face.y = windowHeight - Math.sin(yMap) * 400 - 50
   }
 
   display(rad) {
-if(rad!= null){
-this.radius = rad;
 
-}
+  if(rad!= null){
+  this.radius = rad;
+  }
 
-     noCursor();
-     noStroke();
-     textFont('Caveat Brush');
-     fill(255);
-     noStroke();
-     circle(this.x,this.y,this.radius);
+ noCursor();
+ textFont('Caveat Brush');
+ fill(255);
+ noStroke();
+ circle(this.x,this.y,this.radius);
 
-     beginShape();
-     for(var i = 0; i < TWO_PI ; i+=.3) {
-       let xOff = map(noise(i) * sin(i*4),-1,1,-3,3);
-       let yOff = map(noise(i) * sin(i*4),-1,1,-3,3);
-       let x = this.x +xOff + (this.radius -20) * cos(i);
-       let y = this.y +yOff + (this.radius - 20) * sin(i );
-       vertex(x, y);
-     }
+ beginShape();
+ angleMode(RADIANS);
+ for(var i = 0; i < TWO_PI ; i+= .1) {
+   let xOff = map(noise(i) * sin(i*4),-1,1,-5,5);
+   let yOff = map(noise(i) * sin(i*4),-1,1,-5,5);
+   let x = this.x +xOff + (this.radius -23) * cos(i);
+   let y = this.y +yOff + (this.radius - 23) * sin(i );
+   vertex(x, y);
+ }
 
-     endShape();
+ endShape();
 
-     if (this.leftEye) {
-       noStroke();
-       fill(0);
-       var leftX = (this.x - (.3*this.radius));
-       var leftY= (this.y - (.08*this.radius));
-       drawPunct(".",this.radius/2.5,leftX,leftY,20)
+ if (this.leftEye) {
+   noStroke();
+   fill(0);
+   var leftX = (this.x - (.3*this.radius));
+   var leftY= (this.y - (.08*this.radius));
+   drawPunct(".",this.radius/2.5,leftX,leftY,20)
 
-       //circle(leftX,leftY,this.radius/30);
-     }
+   //circle(leftX,leftY,this.radius/30);
+ }
 
-     if (this.rightEye) {
-       noStroke();
-       fill(0);
-       var rightX =(this.x + (.3*this.radius));
-       var rightY=(this.y - (.08*this.radius));
-       drawPunct(".",this.radius/2.5,rightX,rightY,20)
+ if (this.rightEye) {
+   noStroke();
+   fill(0);
+   var rightX =(this.x + (.3*this.radius));
+   var rightY=(this.y - (.08*this.radius));
+   drawPunct(".",this.radius/2.5,rightX,rightY,20)
 
-     }
+ }
 
-     if(this.mouth) {
-       noFill();
-     stroke(2);
-         arc(this.x, this.y + .12*this.radius, 1.5*(leftX-this.x),this.radius/3 ,0, PI);
-         //inverse mouth
+ if(this.mouth) {
+   noFill();
+   stroke(0);
+   arc(this.x, this.y + .12*this.radius, 1.5*(leftX-this.x),this.radius/3 ,0, PI);
+     //inverse mouth
+ }
 
+ if(this.upsideDownMouth) {
 
-     noStroke();
-     }
+   noFill();
+   stroke(0);
+  arc(this.x, this.y  + .3*this.radius, 1.5*(leftX-this.x),this.radius/3,PI, TWO_PI);
 
-     if(this.upsideDownMouth) {
+ }
 
-       noFill();
-     stroke(2);
-          arc(this.x, this.y  + .3*this.radius, 1.5*(leftX-this.x),this.radius/3,PI, TWO_PI);
+ if(this.nose) {
+   drawPunct("[",this.radius/2.5,this.x - (.05*this.radius),(this.y +(.02*this.radius))  ,20);
+   drawPunct("] ",this.radius/2.5,this.x + (.05*this.radius),(this.y + (.02*this.radius)),20)
 
-     }
-
-     if(this.nose) {
-       drawPunct("[",this.radius/2.5,this.x - (.05*this.radius),(this.y +(.02*this.radius))  ,20);
-       drawPunct("] ",this.radius/2.5,this.x + (.05*this.radius),(this.y + (.02*this.radius)),20)
-
-     }
+ }
 
 
 
@@ -151,18 +149,11 @@ this.radius = rad;
            //     }
              }
 
-        //For Scene one
-        moveShrink() {
-          this.x = mouseX;
-          this.y = mouseY;
-          this.radius = map(mouseY,200,windowHeight-200,0,100);
 
-        }
-
-        follow() {
+        follow(face) {
           //this.x = mouseX * (.98 + noise(this.x,this.x)/100);
-          this.x = mouseX + map(sin(millis()/400*cos(i)),-1,1,-10,10)
-          this.y = mouseY + 150;
+          face.x = mouseX + map(sin(millis()/600),-1,1,-10,10)
+          face.y = mouseY + 150;
         }
 
 

@@ -1,14 +1,14 @@
 function SceneOne() {
+  let faceOne;
   this.preload = () => {
 
   }
 
   this.setup = () => {
-
+    faceOne = new smileyFace(windowWidth/2,windowHeight - sceneBottomMargin,50);
   }
 
   this.draw = () => {
-    clear();
     var noiseAmp = 24;
     var hSpace = 24;
     var vSpace = 24;
@@ -35,8 +35,25 @@ function SceneOne() {
     //
     // }
 
-    face.moveShrink();
-      noCursor();
-    face.display(null);
+    moveOne(faceOne);
+    faceOne.display(null);
   }
+
+  //helper functions
+
+  //For Scene one
+  function moveOne(face) {
+    face.x = map(mouseX,0,windowWidth, sceneMargin,windowWidth - sceneMargin);
+    face.y = mouseY;
+    face.radius = map(mouseY,200,windowHeight-200,0,100);
+
+
+    if(face.radius < 5) {
+      //mgr.showNextScene();
+      console.log("here we would switch to scene two");
+    }
+
+  }
+
+
 }
