@@ -1,4 +1,14 @@
+var ambience;
+var brush1;
+var brush2;
+
 function preload() {
+  ambience = loadSound('../Assets/Sounds/Scene1/ambience.mp3');
+  ambience.setVolume(0.1);
+  brush1 = loadSound('../Assets/Sounds/Scene1/brush1.mp3');
+  brush1.setVolume(1);
+  brush2 = loadSound('../Assets/Sounds/Scene1/brush3.mp3');
+  brush2.setVolume(1);
 }
 
 //scene manager
@@ -33,7 +43,7 @@ function draw() {
   clear();
   background(backgroundColor);
   mgr.draw();
-  
+
 }
 
 //sketch global helpers
@@ -62,6 +72,10 @@ function  displayCheck(face) {
 
   return true;
 
+  }
+
+  function haveIMoved(face, x, y) {
+    return face.x != x && face.y != y;
   }
 
 
