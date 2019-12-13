@@ -9,6 +9,7 @@ function SceneOne() {
   }
 
   this.draw = () => {
+    textDisplay("You wake up. You remember nothing. You are in a field and the field goes on forever.You pick a direction. You begin to walk.");
     var noiseAmp = 24;
     var hSpace = 24;
     var vSpace = 24;
@@ -29,11 +30,7 @@ function SceneOne() {
       }
     }
 
-    // if ((mouseY < 202) && (mouseY !=0)) {
-    //   drawCase = drawCase +1;
-    //   textCase = textCase + 1;
-    //
-    // }
+
 
     moveOne(faceOne);
     faceOne.display(null);
@@ -47,11 +44,11 @@ function SceneOne() {
     face.y = mouseY;
     face.radius = map(mouseY,200,windowHeight-200,0,100);
 
-
-    if(face.radius < 5) {
-      //mgr.showNextScene();
-      console.log("here we would switch to scene two");
+    //siwtch to scene Two
+    if ((faceOne.radius < 2) && (mouseY !=0)) {
+      mgr.showNextScene();
     }
+
 
   }
 

@@ -1,0 +1,22 @@
+{
+  "name": "comma-quest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "OldScene.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdholakia/CommaQuest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdholakia/CommaQuest/issues"
+  },
+  "homepage": "https://github.com/mdholakia/CommaQuest#readme",
+  "devDependencies": {
+    "eslint": "^6.7.2"
+  }
+}

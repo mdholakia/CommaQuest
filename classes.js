@@ -13,6 +13,11 @@ constructor(xpos,ypos, radius) {
   this.nose = false;
 
 }
+
+  halo() {
+    fill(color(255,255,255,.4))
+    circle(this.x,this.y,this.radius +35)
+  }
   move(rad,face) {
   face.x = mouseX;
   face.y = mouseY;
@@ -38,7 +43,7 @@ constructor(xpos,ypos, radius) {
  fill(255);
  noStroke();
  circle(this.x,this.y,this.radius);
-
+ if(this.radius > 20) {
  beginShape();
  angleMode(RADIANS);
  for(var i = 0; i < TWO_PI ; i+= .1) {
@@ -50,7 +55,7 @@ constructor(xpos,ypos, radius) {
  }
 
  endShape();
-
+  }
  if (this.leftEye) {
    noStroke();
    fill(0);
@@ -103,7 +108,7 @@ constructor(xpos,ypos, radius) {
         this.radius = rad;
       }
           noCursor();
-           if(displayCheck()){
+           if(displayCheck(this)){
            fill(255);
            push()
            translate(this.x, this.y);
@@ -149,12 +154,6 @@ constructor(xpos,ypos, radius) {
            //     }
              }
 
-
-        follow(face) {
-          //this.x = mouseX * (.98 + noise(this.x,this.x)/100);
-          face.x = mouseX + map(sin(millis()/600),-1,1,-10,10)
-          face.y = mouseY + 150;
-        }
 
 
 }

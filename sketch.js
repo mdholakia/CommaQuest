@@ -12,7 +12,7 @@ var sceneBottomMargin;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   backgroundColor = color(245, 240, 228);
-  sceneMargin = (windowWidth - windowWidth/2)/2;
+	sceneMargin = (windowWidth - windowWidth/2)/2;
   sceneTopMargin = windowHeight/5;
   sceneBottomMargin = windowHeight - windowHeight/10;
   sceneWidth = windowWidth/2;
@@ -33,6 +33,7 @@ function draw() {
   clear();
   background(backgroundColor);
   mgr.draw();
+  
 }
 
 //sketch global helpers
@@ -53,13 +54,13 @@ return bound;
 
 
 //multiple checks to whether the face should be displayed
-function  displayCheck() {
+function  displayCheck(face) {
     //if in bounds
-    if (!inBounds(mouseX,mouseY)) {
+  if (!inBounds(face.x,face.y)) {
       return false;
     }
 
-    return true;
+  return true;
 
   }
 
@@ -93,4 +94,23 @@ function keyPressed()
 
     // ... then dispatch via the SceneManager.
     mgr.handleEvent("keyPressed");
+}
+
+function fadeOut() {
+  console.log("fadeout")
+  background(color(0,0,0));
+}
+
+function textDisplay(string) {
+  var textBoxSize= 500;
+  textSize(18);
+  noStroke();
+  fill(0);
+  textAlign(LEFT);
+  //Text will be drawn this far from the bottom
+  var marginBottom = windowHeight/8;
+  //text-dependent on case:
+  textFont("Stoke");
+  text(string,windowWidth/2 - textBoxSize/2, marginBottom,textBoxSize);
+
 }

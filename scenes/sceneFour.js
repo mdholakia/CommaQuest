@@ -1,6 +1,7 @@
 function SceneFour() {
 let jitter = [];
 let cells = [];
+var sceneExitDelay;
 var spiderClickCounter;
 var spider;
 var allPairs = {};
@@ -125,13 +126,12 @@ let faceFour;
 
   this.draw = () => {
 
-
+    textDisplay("Crossing a valley, you stop to watch a spider spin. The wind has torn holes in the web. You feel sorry for the spider trying to make its way home.")
     faceFour.leftEye = true;
-    faceFour.upsideDownMouth = true;
+    //faceFour.upsideDownMouth = true;
     faceFour.nose = true;
     faceFour.display(200);
     moveFour(200,faceFour);
-    cursor();
     voronoiDraw();
 
 
@@ -175,7 +175,10 @@ let faceFour;
 
         //draw a spider
         spider.display();
-
+        addEye(faceFour,spider);
+        if(!(sceneExitDelay ===undefined)) {
+          background(color(0,0,0));
+        }
   }
 
   this.mouseClicked = () => {
@@ -184,7 +187,36 @@ let faceFour;
 
 }
 
+function nextScene() {
 
+
+
+      if(sceneExitDelay ===undefined) {
+
+
+        sceneExitDelay = setTimeout(function() {
+
+          mgr.showNextScene();
+        }, 1000);
+
+      }
+
+
+}
+function addEye(face,spider) {
+if((spiderClickCounter > 32) || (spider.x1>=windowWidth )){
+  face.rightEye = true;
+
+  setTimeout(function() {
+
+    nextScene();
+
+  },1000)
+
+
+}
+
+}
 class crawler {
   constructor(x0,y0,x1,y1) {
               this.x0 = x0;
@@ -195,11 +227,11 @@ class crawler {
               this.moveBool = true;
             }
     body(x,y) {
-      textFont("Stoke");
+      textFont("Permanent Marker");
       push();
 
       fill(7);
-      circle(x,y,50);
+      circle(x,y,40);
       angleMode(DEGREES);
       for (var l = 0; l < 360 ; l+= 40) {
         stroke(7);
@@ -208,8 +240,25 @@ class crawler {
         line(x + 60*cos(l),y + sin(l)*60,x + 60*cos(l) + 10*cos(l), y + sin(l)*60 );
 
       }
-      drawPunct(")",10,x + 5, y - 7,255);
-      drawPunct(")",10,x + 5, y + 9,255);
+
+      beginShape();
+      fill(7);
+      angleMode(RADIANS);
+      for(var i = 0; i < TWO_PI ; i+= .1) {
+        let xOff = map(noise(i) * sin(i*4),-1,1,-2,2);
+        let yOff = map(noise(i) * sin(i*4),-1,1,-2,2);
+        let xV = x +xOff + (45-24) * cos(i);
+        let yV = y +yOff + (45-24) * sin(i );
+        vertex(xV, yV);
+      }
+
+      endShape();
+
+      drawPunct(".",30,x + 5, y - 7,255);
+      drawPunct(".",30,x + 5, y + 9,255);
+      drawPunct(".",15,x + 5, y + 9,0);
+      drawPunct(".",15,x + 5, y - 7,0);
+
       if(!this.moveBool) {
 
         drawPunct("-- %$%^$",random(18,20),x + 100, y,random(2,10));
@@ -234,7 +283,14 @@ class crawler {
     }
 
     else {
-      this.body(this.x1,this.y1);
+
+      if(this.x1 < windowWidth) {
+        this.body(this.x1,this.y1);
+      }
+      else {
+
+      }
+
 
     }
     }
