@@ -5,6 +5,7 @@ let facethree;
 let starOffX;
 let starOffY;
 var sceneExitDelay;
+let xOff;
 const stars = []
 
   this.preload = () => {
@@ -12,13 +13,14 @@ const stars = []
   }
 
   this.setup = () => {
+    xOff = mouseX;
     for (let i = 0; i < 100; i++) {
         stars.push({
         x: random(0, windowWidth),
         y: random(0, windowHeight)
         })
     }
-  faceThree = new smileyFace(sceneMargin,windowHeight - sceneBottomMargin, 30);
+  faceThree = new smileyFace(sceneMargin - 40,sceneBottomMargin, 30);
   cometTimer = 0;
   mountainWidth = windowWidth - 2*sceneMargin;
   starOffX = 0;
@@ -29,7 +31,8 @@ const stars = []
   this.draw = () => {
 
     let nightColor = color(10, 0, 10);
-    const interpolationFactor = getLerpFactor(mouseX, windowWidth / 2, mountainWidth)
+
+    const interpolationFactor = getLerpFactor(faceThree.x, windowWidth / 2, mountainWidth)
     let skyColor = lerpColor(backgroundColor,nightColor,interpolationFactor)
     background(skyColor);
 
@@ -56,8 +59,7 @@ const stars = []
         circle(star.x,star.y,random(0,3));
       }
 
-      fill(backgroundColor);
-      //  arc(windowWidth/2, windowHeight, windowWidth - sceneMargin*2,windowHeight  ,PI, TWO_PI);
+
 
       randomSeed(10);
       for (let x = sceneMargin; x < windowWidth - sceneMargin; x+=1) {
@@ -99,7 +101,6 @@ const stars = []
 
 function nextScene(face) {
   if(face.x >= windowWidth*.98) {
-      fadeOut();
       if(sceneExitDelay ===undefined) {
         sceneExitDelay = setTimeout(function() {
           mgr.showNextScene();
@@ -111,10 +112,26 @@ function nextScene(face) {
 }
 function  moveThree(lerpFactor, face) {
     angleMode(RADIANS);
-    face.x = mouseX
+
     const yMap = map(lerpFactor, 0, 1, 0, Math.PI / 2)
     face.y = windowHeight - Math.sin(yMap) * 400 - 50
-  }
+
+
+
+    if (keyIsDown(LEFT_ARROW)) {
+      face.x -= 5;
+
+
+    }
+
+    if (keyIsDown(RIGHT_ARROW)) {
+      face.x += 5;
+    }
+
+}
+
+
+
 
 
 function cometTime(face, skyColor) {

@@ -13,7 +13,7 @@ function SceneTwo() {
 
   this.setup = () => {
     specialTreeY = sceneBottomMargin - 30;
-    faceTwo = new smileyFace(sceneTopMargin,mouseY,50);
+    faceTwo = new smileyFace(sceneMargin + 75,sceneBottomMargin - 50,50);
     specialTreeX= windowWidth * 2/3 - 50;
     specialTreeSize = windowHeight/1.8;
     fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
@@ -78,7 +78,7 @@ function SceneTwo() {
       snowFall[v].fall();
     }
     //draw our special tree
-    specialTree();
+    specialTree(faceTwo);
 
 if(fruit.eaten && sceneExitDelay === undefined) {
   // startTime = millis();
@@ -171,7 +171,7 @@ class snowFlake {
 
           }
 
-function specialTree () {
+function specialTree (face) {
 
   //This section checks how to draw the interactive tree based on whether the mouse is over it and whether the fruit has fallen
   if(fruit.fallen) {
@@ -182,7 +182,7 @@ function specialTree () {
 
   }
 
-  if((mouseX < specialTreeX + 50) && (mouseX > specialTreeX - 50)) {
+  if((face.x < specialTreeX + 50) && (face.x > specialTreeX - 50)) {
   //only shake the tree if the fruit hasn't fallen
   if(!fruit.fallen){
       drawPunct("Y",specialTreeSize,specialTreeX + (sin(TWO_PI * millis()/5 )*3 ),specialTreeY,7);
@@ -245,19 +245,37 @@ class specialFruit {
   }
 
   function moveTwo(face) {
-  face.x = mouseX;
 
-  var diff = oldMouseY - mouseY;
-  face.y = face.y - diff;
 
-  if((face.y < sceneBottomMargin - 100 )) {
-    //map the face value back down
-    face.y = sceneBottomMargin -100;
+  if (keyIsDown(LEFT_ARROW)) {
+    face.x -= 3;
   }
-  if((face.y >= windowHeight )) {
-    //map the face value back down
-    face.y = windowHeight;
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    face.x += 3;
   }
-  oldMouseY = mouseY;
+
+  if (keyIsDown(UP_ARROW)) {
+    if((face.y < sceneBottomMargin - 100 )) {
+      //map the face value back down
+      face.y = sceneBottomMargin -100;
+    }
+    else{
+    face.y -= 3;
+    }
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    if((face.y >= windowHeight )) {
+      //map the face value back down
+      face.y = windowHeight;
+    }
+    else {
+        face.y += 3;
+    }
+
+
+  }
+
   }
 }

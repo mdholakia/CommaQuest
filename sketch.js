@@ -11,7 +11,9 @@ var sceneBottomMargin;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  backgroundColor = color(245, 240, 228);
+  // backgroundColor = color(245, 240, 228);
+  colorMode(RGB,255);
+  backgroundColor = color(238, 238, 200);
 	sceneMargin = (windowWidth - windowWidth/2)/2;
   sceneTopMargin = windowHeight/5;
   sceneBottomMargin = windowHeight - windowHeight/10;
@@ -30,10 +32,14 @@ function setup() {
 }
 
 function draw() {
+
   clear();
+  //using the get() is fucking up our color mode somehow, so we're just going to put one at the top so that the scene starts with the weird color mode
+  let fakeColor = color(get(0,0));
+
   background(backgroundColor);
   mgr.draw();
-  
+
 }
 
 //sketch global helpers
@@ -90,6 +96,9 @@ function keyPressed()
         case '5':
             mgr.showScene( SceneFive );
             break;
+        case '6':
+            mgr.showScene( SceneTwoTransition );
+            break;
     }
 
     // ... then dispatch via the SceneManager.
@@ -102,15 +111,15 @@ function fadeOut() {
 }
 
 function textDisplay(string) {
-  var textBoxSize= 500;
-  textSize(18);
+  var textBoxSize= 700;
+  textSize(28);
   noStroke();
   fill(0);
   textAlign(LEFT);
   //Text will be drawn this far from the bottom
   var marginBottom = windowHeight/8;
   //text-dependent on case:
-  textFont("Stoke");
-  text(string,windowWidth/2 - textBoxSize/2, marginBottom,textBoxSize);
+  textFont("IM Fell Double Pica");
+  text(string,windowWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
 
 }

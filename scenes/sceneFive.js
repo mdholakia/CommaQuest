@@ -96,23 +96,32 @@ moveFive(faceFive);
   }
 
   function moveFive(face) {
-  // face.x = map(mouseX,0,windowWidth, sceneMargin,windowWidth - sceneMargin);
-  // face.y = map(mouseY,0,windowHeight,sceneTopMargin,sceneBottomMargin);
-  // face.radius = rad;
-  face.x = mouseX;
 
-  var diff = oldMouseY - mouseY;
-  face.y = face.y - diff;
 
-  if((face.y < 0 )) {
+  if (keyIsDown(LEFT_ARROW)) {
+    face.x -= 3;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    face.x += 3;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    face.y -= 3;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    face.y += 3;
+  }
+  if((face.y < windowHeight/2 - 75  )) {
     //map the face value back down
-    face.y = 0;
+    face.y = windowHeight/2 - 75 ;
   }
   if((face.y >= windowHeight/2 + 200 )) {
     //map the face value back down
     face.y = windowHeight/2 + 200;
   }
-  oldMouseY = mouseY;
+
 
 
   }
@@ -125,7 +134,7 @@ moveFive(faceFive);
 
   function stay(inverseFace, bankHeight) {
     if (inverseFace.y < bankHeight + 150 ){
-      inverseFace.y = inverseFace.y + 1.5;
+      inverseFace.y = inverseFace.y + .75;
     }
     else {
 
@@ -142,7 +151,11 @@ moveFive(faceFive);
 
       inverseFace.y = inverseFace.y - 1.5;
     }
-    if(floor(face.y - inverseFace.y) == 0) {
+    if(abs(floor(face.y - inverseFace.y)) < 3) {
+      console.log("face y" + face.y);
+      console.log("inverse y" +inverseFace.y);
+
+        console.log("floor" + floor(face.y - inverseFace.y));
       face.mouth = true;
     }
     else {
