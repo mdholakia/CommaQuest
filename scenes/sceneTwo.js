@@ -14,8 +14,8 @@ function SceneTwo() {
   this.setup = () => {
     specialTreeY = sceneBottomMargin - 30;
     faceTwo = new smileyFace(sceneMargin + 75,sceneBottomMargin - 50,50);
-    specialTreeX= windowWidth * 2/3 - 50;
-    specialTreeSize = windowHeight/1.8;
+    specialTreeX= displayWidth * 2/3 - 50;
+    specialTreeSize = displayHeight/1.8;
     fruit = new specialFruit(600,specialTreeX + 30, specialTreeY - specialTreeSize * 3/4,color(255,0,10));
     snowFall = []
     snowFall[0] = 50;
@@ -37,7 +37,7 @@ function SceneTwo() {
     var hSpace = 80;
     var vSpace = 60;
     var row;
-    var originalSize = windowHeight/3.8;
+    var originalSize = displayHeight/3.8;
     var treeRows = 5;
     var itemsInRow = 15;
     var startPoint = sceneMargin;
@@ -117,9 +117,9 @@ class snowFlake {
               randomSeed();
               this.lifespan = round(random(-200,-400));
               //only x values in the screen area
-              this.x = random(sceneMargin, windowWidth - sceneMargin);
+              this.x = random(sceneMargin, displayWidth - sceneMargin);
 
-              this.y = random(0,windowHeight/4);
+              this.y = random(0,displayHeight/4);
               this.generation = generation || 0;
 
             }
@@ -266,9 +266,9 @@ class specialFruit {
   }
 
   if (keyIsDown(DOWN_ARROW)) {
-    if((face.y >= windowHeight )) {
+    if((face.y >= displayHeight )) {
       //map the face value back down
-      face.y = windowHeight;
+      face.y = displayHeight;
     }
     else {
         face.y += 3;

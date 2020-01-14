@@ -5,7 +5,7 @@ function SceneOne() {
   }
 
   this.setup = () => {
-    faceOne = new smileyFace(windowWidth/2,sceneBottomMargin,50);
+    faceOne = new smileyFace(displayWidth/2,sceneBottomMargin,50);
   }
 
   this.draw = () => {
@@ -23,7 +23,7 @@ function SceneOne() {
       row = floor(i/itemsInRow);
       var size = 2+row*2;
       var x = (i%itemsInRow)*hSpace + startPoint;
-      var y = windowHeight/4 + vSpace*row + noise(i)*noiseAmp;
+      var y = displayHeight/4 + vSpace*row + noise(i)*noiseAmp;
 
       if(inBounds(x,y)){
       drawPunct('"',size,x,y,0);
@@ -40,7 +40,7 @@ function SceneOne() {
 
   //For Scene one
   function moveOne(face) {
-    // face.x = map(mouseX,0,windowWidth, sceneMargin,windowWidth - sceneMargin);
+    // face.x = map(mouseX,0,displayWidth, sceneMargin,displayWidth - sceneMargin);
     // face.y = mouseY;
 
       if (keyIsDown(LEFT_ARROW)) {
@@ -59,7 +59,7 @@ function SceneOne() {
         face.y += 3;
       }
 
-    face.radius = map(face.y,200,windowHeight-200,0,100);
+    face.radius = map(face.y,200,displayHeight-200,0,100);
 
     //switch to scene Two
     if ((faceOne.radius < 2) && (faceOne != undefined)) {

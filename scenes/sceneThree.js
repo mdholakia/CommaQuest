@@ -16,13 +16,13 @@ const stars = []
     xOff = mouseX;
     for (let i = 0; i < 100; i++) {
         stars.push({
-        x: random(0, windowWidth),
-        y: random(0, windowHeight)
+        x: random(0, displayWidth),
+        y: random(0, displayHeight)
         })
     }
   faceThree = new smileyFace(sceneMargin - 40,sceneBottomMargin, 30);
   cometTimer = 0;
-  mountainWidth = windowWidth - 2*sceneMargin;
+  mountainWidth = displayWidth - 2*sceneMargin;
   starOffX = 0;
   starOffY = 0;
   }
@@ -32,15 +32,15 @@ const stars = []
 
     let nightColor = color(10, 0, 10);
 
-    const interpolationFactor = getLerpFactor(faceThree.x, windowWidth / 2, mountainWidth)
+    const interpolationFactor = getLerpFactor(faceThree.x, displayWidth / 2, mountainWidth)
     let skyColor = lerpColor(backgroundColor,nightColor,interpolationFactor)
     background(skyColor);
 
     textDisplay("The mountains are like a bridge to the sky. You feel tiny by comparison. You want to stop, to lie down in their shadow, but something calls you forward.");
 
     textFont("Amatic SC")
-    let x = windowWidth/2 - sceneMargin;
-    let y = windowHeight/2;
+    let x = displayWidth/2 - sceneMargin;
+    let y = displayHeight/2;
     let size = 800
 
 
@@ -62,13 +62,13 @@ const stars = []
 
 
       randomSeed(10);
-      for (let x = sceneMargin; x < windowWidth - sceneMargin; x+=1) {
-        const yMap = map(getLerpFactor(x,windowWidth/2,mountainWidth), 0, 1, 0, Math.PI / 2)
-        const y = windowHeight - Math.sin(yMap) * 400 - 50
+      for (let x = sceneMargin; x < displayWidth - sceneMargin; x+=1) {
+        const yMap = map(getLerpFactor(x,displayWidth/2,mountainWidth), 0, 1, 0, Math.PI / 2)
+        const y = displayHeight - Math.sin(yMap) * 400 - 50
         // draw punc at x, y
 
-        let mountainColor = color(3 + map(mouseY,0,windowHeight,0,30), random(40,70) + map(mouseY,0,windowHeight,0,30), random(40,70) - map(mouseY,0,windowHeight,0,20));
-        drawPunct("^",round(random(50,70)),x - 10,random(y ,windowHeight),mountainColor)
+        let mountainColor = color(3 + map(mouseY,0,displayHeight,0,30), random(40,70) + map(mouseY,0,displayHeight,0,30), random(40,70) - map(mouseY,0,displayHeight,0,20));
+        drawPunct("^",round(random(50,70)),x - 10,random(y ,displayHeight),mountainColor)
       }
 
     faceThree.leftEye= true;
@@ -100,7 +100,7 @@ const stars = []
   }
 
 function nextScene(face) {
-  if(face.x >= windowWidth*.98) {
+  if(face.x >= displayWidth*.98) {
       if(sceneExitDelay ===undefined) {
         sceneExitDelay = setTimeout(function() {
           mgr.showNextScene();
@@ -114,7 +114,7 @@ function  moveThree(lerpFactor, face) {
     angleMode(RADIANS);
 
     const yMap = map(lerpFactor, 0, 1, 0, Math.PI / 2)
-    face.y = windowHeight - Math.sin(yMap) * 400 - 50
+    face.y = displayHeight - Math.sin(yMap) * 400 - 50
 
 
 
@@ -135,7 +135,7 @@ function  moveThree(lerpFactor, face) {
 
 
 function cometTime(face, skyColor) {
-  if((face.y < windowHeight - 400) || cometTimer > 0) {
+  if((face.y < displayHeight - 400) || cometTimer > 0) {
     comet(skyColor);
   }
 
@@ -143,32 +143,32 @@ function cometTime(face, skyColor) {
 
 function comet(skyColor) {
 
-  if (!(cometTimer > windowWidth)) {
+  if (!(cometTimer > displayWidth)) {
     // fill(200);
-    // circle(cometTimer, 500 * (1 - sin(map(cometTimer, 0, windowWidth/2, 0, Math.PI / 2))/2) ,10);
+    // circle(cometTimer, 500 * (1 - sin(map(cometTimer, 0, displayWidth/2, 0, Math.PI / 2))/2) ,10);
     noStroke();
     for(var i = cometTimer - 60 ; i < cometTimer ; i+=3) {
         var ope = map(i,cometTimer - 60,cometTimer,0,1);
       //fill(255,0,0);
       fill(255, 255, 120,ope/3);
 
-      circle(i, 500 * (1 - sin(map(i, 0, windowWidth/2, Math.PI / 5, Math.PI / 2))), map(i,cometTimer - 60, cometTimer,2,15));
+      circle(i, 500 * (1 - sin(map(i, 0, displayWidth/2, Math.PI / 5, Math.PI / 2))), map(i,cometTimer - 60, cometTimer,2,15));
 
       fill(255,255,255,ope *ope);
-      circle(i, 500 * (1 - sin(map(i, 0, windowWidth/2, Math.PI / 5, Math.PI / 2))), map(i,cometTimer - 60, cometTimer,.4,10));
+      circle(i, 500 * (1 - sin(map(i, 0, displayWidth/2, Math.PI / 5, Math.PI / 2))), map(i,cometTimer - 60, cometTimer,.4,10));
 
 
     }
     cometTimer+=12;
   }
 
-  if ((cometTimer < windowWidth/2 + 20) && (cometTimer > windowWidth/2 - 20)) {
+  if ((cometTimer < displayWidth/2 + 20) && (cometTimer > displayWidth/2 - 20)) {
 
     faceThree.nose = true;
 
   }
 
-  if((cometTimer < windowWidth/2 + 100) && (cometTimer > windowWidth/2 -100)) {
+  if((cometTimer < displayWidth/2 + 100) && (cometTimer > displayWidth/2 -100)) {
 
     starOffY= (map(sin(cometTimer)/5,0,1,0,TWO_PI ));
     starOffX =(map(cos(cometTimer)/5,0,1,0,TWO_PI));

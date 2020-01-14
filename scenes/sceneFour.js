@@ -15,7 +15,7 @@ let faceFour;
 
   this.setup = () => {
 
-  faceFour = new smileyFace(windowWidth/2,windowHeight/2,500);
+  faceFour = new smileyFace(displayWidth/2,displayHeight/2,500);
   spiderClickCounter = 2;
   //setting up spider web
   voronoiJitterStepMax(20);
@@ -37,8 +37,8 @@ let faceFour;
 
       r = a*exp(b*angle)
       //r = r + random(-sqrt(r),sqrt(r))*random(1,15);
-      let x = r*cos(angle)+ windowWidth/2;
-      let y = r*sin(angle) + windowHeight/2;
+      let x = r*cos(angle)+ displayWidth/2;
+      let y = r*sin(angle) + displayHeight/2;
 
      if(noise(x,y) > .4 ) {
       voronoiSite(x ,y);
@@ -69,7 +69,7 @@ let faceFour;
        }
     }
 
-  voronoi(windowWidth, windowHeight, true);
+  voronoi(displayWidth, displayHeight, true);
   var diagram = voronoiGetDiagram();
   let cellArray = voronoiGetCells();
   let cellArrayJitter = voronoiGetCellsJitter()
@@ -84,7 +84,7 @@ let faceFour;
   for (i = 0; i < (cellArray.length); i ++) {
     let subCell = cellArray[i];
     for (j = 0; j < subCell.length; j+=1) {
-      if(!foundP1 && (subCell[j][0] < windowWidth/4) && (subCell[j][1] > 60)) {
+      if(!foundP1 && (subCell[j][0] < displayWidth/4) && (subCell[j][1] > 60)) {
         firstPoint = subCell[j];
         foundP1 = true;
       }
@@ -200,7 +200,7 @@ function nextScene() {
 
 }
 function addEye(face,spider) {
-if((spiderClickCounter > 32) || (spider.x1>=windowWidth )){
+if((spiderClickCounter > 32) || (spider.x1>=displayWidth )){
   face.rightEye = true;
 
   setTimeout(function() {
@@ -280,7 +280,7 @@ class crawler {
 
     else {
 
-      if(this.x1 < windowWidth) {
+      if(this.x1 < displayWidth) {
         this.body(this.x1,this.y1);
       }
       else {
@@ -316,7 +316,7 @@ class crawler {
 
               return;
             }
-            if(this.x1 >= windowWidth) {
+            if(this.x1 >= displayWidth) {
               this.moveBool = false;
             }
 
@@ -337,7 +337,7 @@ class crawler {
                         else {
                           //flip a coin
 
-                          if (abs(rightMove[1] - windowWidth/2) > abs(allConnecting[index][1] -windowWidth/2)) {
+                          if (abs(rightMove[1] - displayWidth/2) > abs(allConnecting[index][1] -displayWidth/2)) {
 
                             rightMove = allConnecting[index]
 
