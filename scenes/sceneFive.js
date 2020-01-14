@@ -1,7 +1,8 @@
 function SceneFive() {
-  faceFive = new smileyFace(windowWidth/2,windowHeight/2 - 200,50);
+  faceFive = new smileyFace(displayWidth/2,displayHeight/2 - 200,50);
   let caption;
-  inverseFace = new smileyFace(windowWidth/2, windowHeight/2,50);
+  let doorBool;
+  inverseFace = new smileyFace(displayWidth/2, displayHeight/3,50);
   let oldMouseY = mouseY;
   this.preload = () => {
 
@@ -25,6 +26,7 @@ function SceneFive() {
   this.draw = () => {
   textDisplay(caption)
   textFont("Stoke");
+
   var noiseAmp = 24;
   var hSpace = 24;
   var vSpace = 24;
@@ -33,8 +35,10 @@ function SceneFive() {
   var itemsInRow = 50;
   //Vertical Start & horizontal startß
   var startPoint = sceneMargin + 3;
-  var vStart = windowHeight * 2/4;
+  var vStart = displayHeight * 2/4;
   //river bank
+
+
   randomSeed(4);
   fill(0);
   let vStartBank  = vStart- 35;
@@ -53,6 +57,7 @@ function SceneFive() {
   else {
     caption = "You are whole again."
     stay(inverseFace,vStartBank);
+    doorBool = true;
   }
 
   //faceFive.upsideDownMouth = true;
@@ -60,12 +65,12 @@ function SceneFive() {
 
   fill(0);
 
-  for (var j = startPoint - 5; j < windowWidth - sceneMargin - 5 ; j++) {
+  for (var j = startPoint - 5; j < displayWidth - sceneMargin - 5 ; j++) {
 
     noStroke();
     circle(j,vStartBank + (random(-10,15)),2);
   }
-  for (var j = startPoint - 5; j < windowWidth - sceneMargin - 5 ; j++) {
+  for (var j = startPoint - 5; j < displayWidth - sceneMargin - 5 ; j++) {
 
     noStroke();
     circle(j,vStartBank - 10 + random(-2,-1),2);
@@ -73,7 +78,7 @@ function SceneFive() {
   stroke(20);
   strokeWeight(2);
   fill(0);
-  //line(startPoint - 5,vStartBank - 10,windowWidth - sceneMargin - 5, vStartBank -10);
+  //line(startPoint - 5,vStartBank - 10,displayWidth - sceneMargin - 5, vStartBank -10);
 
   for(var i = 0; i < 500; i++ ) {
 
@@ -88,7 +93,18 @@ function SceneFive() {
     }
   }
 
-faceFive.display(50);
+
+if(doorBool == true) {
+  door(displayWidth - sceneMargin - 3,vStartBank - 12);
+}
+
+if(doorBool != true ) {
+  faceFive.display(50);
+}
+else {
+  faceFive.display( );
+}
+
 moveFive(faceFive);
 
 
@@ -96,27 +112,76 @@ moveFive(faceFive);
   }
 
   function moveFive(face) {
-  // face.x = map(mouseX,0,windowWidth, sceneMargin,windowWidth - sceneMargin);
-  // face.y = map(mouseY,0,windowHeight,sceneTopMargin,sceneBottomMargin);
-  // face.radius = rad;
-  face.x = mouseX;
 
-  var diff = oldMouseY - mouseY;
-  face.y = face.y - diff;
 
-  if((face.y < 0 )) {
+  if (keyIsDown(LEFT_ARROW)) {
+    face.x -= 3;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    face.x += 3;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    face.y -= 3;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    face.y += 3;
+  }
+  if((face.y < displayHeight/2 - 75  )) {
     //map the face value back down
-    face.y = 0;
+    face.y = displayHeight/2 - 75 ;
   }
-  if((face.y >= windowHeight/2 + 200 )) {
+  if((face.y >= displayHeight/2 + 200 )) {
     //map the face value back down
-    face.y = windowHeight/2 + 200;
-  }
-  oldMouseY = mouseY;
-
-
+    face.y = displayHeight/2 + 200;
   }
 
+
+
+  }
+
+  function door(x,y) {
+    let h= 100;
+    let w = 60;
+    fill (0);
+    rect(x - w,y - h,w,h);
+    circle(x + w/2 - w,y - h, w );
+    randomSeed(30);
+    for(let i = 0; i < 40; i++) {
+      fill(255,255,255, random(150,255));
+      circle(random(x - w, x), random(y - h, y + h),1);
+      fill(255);
+      circle(random(x - w, x), random(y - h, y + h),2);
+
+    }
+
+    if(onDoor(h,w,x,y)) {
+      ascend(faceFive);
+    }
+
+
+  }
+
+  function onDoor(h,w,x,y) {
+    if((faceFive.x < x && faceFive.x > x - .75*w) && (faceFive.y > y - h && faceFive.y < y)) {
+      return true;
+      }
+
+  }
+
+  function ascend(face) {
+    if(faceFive.radius > 0) {
+    faceFive.radius = faceFive.radius  - .5;
+    }
+    else {
+
+      fadeOut();
+    }
+
+
+  }
   function follow(face) {
     face.x = faceFive.x + map(sin(millis()/600),-1,1,-10,10)
     face.y = faceFive.y + 200;
@@ -125,7 +190,7 @@ moveFive(faceFive);
 
   function stay(inverseFace, bankHeight) {
     if (inverseFace.y < bankHeight + 150 ){
-      inverseFace.y = inverseFace.y + 1.5;
+      inverseFace.y = inverseFace.y + .75;
     }
     else {
 
@@ -142,7 +207,11 @@ moveFive(faceFive);
 
       inverseFace.y = inverseFace.y - 1.5;
     }
-    if(floor(face.y - inverseFace.y) == 0) {
+    if(abs(floor(face.y - inverseFace.y)) < 3) {
+      console.log("face y" + face.y);
+      console.log("inverse y" +inverseFace.y);
+
+        console.log("floor" + floor(face.y - inverseFace.y));
       face.mouth = true;
     }
     else {

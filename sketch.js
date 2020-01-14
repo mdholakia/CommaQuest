@@ -1,4 +1,6 @@
+let titleCard
 function preload() {
+  titleCard = loadImage('Assets/TitleCard.png')
 }
 
 //scene manager
@@ -10,15 +12,18 @@ var sceneTopMargin;
 var sceneBottomMargin;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  backgroundColor = color(245, 240, 228);
-	sceneMargin = (windowWidth - windowWidth/2)/2;
-  sceneTopMargin = windowHeight/5;
-  sceneBottomMargin = windowHeight - windowHeight/10;
-  sceneWidth = windowWidth/2;
+  createCanvas(displayWidth, displayHeight);
+  // backgroundColor = color(245, 240, 228);
+  colorMode(RGB,255);
+  backgroundColor = color(238, 238, 200);
+	sceneMargin = (displayWidth - displayWidth/2)/2;
+  sceneTopMargin = displayHeight/5;
+  sceneBottomMargin = displayHeight - displayHeight/10;
+  sceneWidth = displayWidth/2;
   frame = new screen();
 
   mgr = new SceneManager();
+  mgr.addScene ( SceneOpening );
   mgr.addScene ( SceneOne );
   mgr.addScene ( SceneTwo );
   mgr.addScene ( SceneThree );
@@ -30,10 +35,14 @@ function setup() {
 }
 
 function draw() {
+
   clear();
+  //using the get() is fucking up our color mode somehow, so we're just going to put one at the top so that the scene starts with the weird color mode
+  let fakeColor = color(get(0,0));
+
   background(backgroundColor);
   mgr.draw();
-  
+
 }
 
 //sketch global helpers
@@ -90,6 +99,10 @@ function keyPressed()
         case '5':
             mgr.showScene( SceneFive );
             break;
+        case '6':
+            mgr.showScene( SceneOpening );
+            break;
+
     }
 
     // ... then dispatch via the SceneManager.
@@ -102,15 +115,15 @@ function fadeOut() {
 }
 
 function textDisplay(string) {
-  var textBoxSize= 500;
-  textSize(18);
+  var textBoxSize= 700;
+  textSize(28);
   noStroke();
   fill(0);
   textAlign(LEFT);
   //Text will be drawn this far from the bottom
-  var marginBottom = windowHeight/8;
+  var marginBottom = displayHeight/8;
   //text-dependent on case:
-  textFont("Stoke");
-  text(string,windowWidth/2 - textBoxSize/2, marginBottom,textBoxSize);
+  textFont("IM Fell Double Pica");
+  text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
 
 }

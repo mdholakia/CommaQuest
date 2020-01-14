@@ -14,7 +14,8 @@ let faceFour;
   }
 
   this.setup = () => {
-  faceFour = new smileyFace(windowWidth,windowHeight,500);
+
+  faceFour = new smileyFace(displayWidth/2,displayHeight/2,500);
   spiderClickCounter = 2;
   //setting up spider web
   voronoiJitterStepMax(20);
@@ -36,8 +37,8 @@ let faceFour;
 
       r = a*exp(b*angle)
       //r = r + random(-sqrt(r),sqrt(r))*random(1,15);
-      let x = r*cos(angle)+ windowWidth/2;
-      let y = r*sin(angle) + windowHeight/2;
+      let x = r*cos(angle)+ displayWidth/2;
+      let y = r*sin(angle) + displayHeight/2;
 
      if(noise(x,y) > .4 ) {
       voronoiSite(x ,y);
@@ -68,7 +69,7 @@ let faceFour;
        }
     }
 
-  voronoi(windowWidth, windowHeight, true);
+  voronoi(displayWidth, displayHeight, true);
   var diagram = voronoiGetDiagram();
   let cellArray = voronoiGetCells();
   let cellArrayJitter = voronoiGetCellsJitter()
@@ -83,7 +84,7 @@ let faceFour;
   for (i = 0; i < (cellArray.length); i ++) {
     let subCell = cellArray[i];
     for (j = 0; j < subCell.length; j+=1) {
-      if(!foundP1 && (subCell[j][0] < windowWidth/4) && (subCell[j][1] > 60)) {
+      if(!foundP1 && (subCell[j][0] < displayWidth/4) && (subCell[j][1] > 60)) {
         firstPoint = subCell[j];
         foundP1 = true;
       }
@@ -118,7 +119,6 @@ let faceFour;
 
       var firstValue = firstPair[1][0];
 
-
     }
 
 
@@ -126,20 +126,14 @@ let faceFour;
 
   this.draw = () => {
 
-    textDisplay("Crossing a valley, you stop to watch a spider spin. The wind has torn holes in the web. You feel sorry for the spider trying to make its way home.")
+
+
     faceFour.leftEye = true;
     //faceFour.upsideDownMouth = true;
     faceFour.nose = true;
     faceFour.display(200);
     moveFour(200,faceFour);
     voronoiDraw();
-
-
-    let c = color(get(windowWidth/2, windowHeight/2));
-      //console.log(c);
-    let black = color(0,0,0,255);
-       push();
-
     fill(0);
 
     let cellArray = jitter[0];
@@ -156,9 +150,7 @@ let faceFour;
 
 
             strokeWeight(2);
-            // if(i == 4) {
-            //   stroke(255);
-            // }
+
             stroke(0);
 
 
@@ -176,19 +168,23 @@ let faceFour;
         //draw a spider
         spider.display();
         addEye(faceFour,spider);
-        if(!(sceneExitDelay ===undefined)) {
-          background(color(0,0,0));
-        }
+        // if(!(sceneExitDelay ===undefined)) {
+        //   background(color(0,0,0));
+        // }
+        keyPressed(faceFour);
+
+  textDisplay("Crossing a valley, you stop to watch a spider spin. The wind has torn holes in the web. You feel sorry for the spider trying to make its way home.")
   }
 
   this.mouseClicked = () => {
   spiderClickCounter = spiderClickCounter * 2;
   spider.moveBool = true;
 
+
+
 }
 
 function nextScene() {
-
 
 
       if(sceneExitDelay ===undefined) {
@@ -204,14 +200,14 @@ function nextScene() {
 
 }
 function addEye(face,spider) {
-if((spiderClickCounter > 32) || (spider.x1>=windowWidth )){
+if((spiderClickCounter > 32) || (spider.x1>=displayWidth )){
   face.rightEye = true;
 
   setTimeout(function() {
 
     nextScene();
 
-  },1000)
+  },200)
 
 
 }
@@ -236,8 +232,8 @@ class crawler {
       for (var l = 0; l < 360 ; l+= 40) {
         stroke(7);
         strokeWeight(3);
-        line(x,y, x + 60*cos(l),y + sin(l)*60);
-        line(x + 60*cos(l),y + sin(l)*60,x + 60*cos(l) + 10*cos(l), y + sin(l)*60 );
+        line(x,y, x + 60*cos(l),y + sin(l)*60 );
+        line(x + 60*cos(l) ,y + sin(l)*60,x + 60*cos(l) + 10*cos(l), y + sin(l)*60 );
 
       }
 
@@ -245,7 +241,7 @@ class crawler {
       fill(7);
       angleMode(RADIANS);
       for(var i = 0; i < TWO_PI ; i+= .1) {
-        let xOff = map(noise(i) * sin(i*4),-1,1,-2,2);
+        let xOff = map(noise(i) * sin(i*4),-1,1,-2,2) ;
         let yOff = map(noise(i) * sin(i*4),-1,1,-2,2);
         let xV = x +xOff + (45-24) * cos(i);
         let yV = y +yOff + (45-24) * sin(i );
@@ -279,12 +275,12 @@ class crawler {
         this.nextPoint();
       }
 
-      this.body(v3.x,v3.y);
+      this.body(v3.x ,v3.y );
     }
 
     else {
 
-      if(this.x1 < windowWidth) {
+      if(this.x1 < displayWidth) {
         this.body(this.x1,this.y1);
       }
       else {
@@ -315,13 +311,12 @@ class crawler {
             let xTest = allConnecting[index][0];
             let yTest = allConnecting[index][1];
 
-            //&& !(xTest == this.x1 && yTest == this.y1)
             //if we shouldn't be moving
             if(!this.moveBool) {
 
               return;
             }
-            if(this.x1 >= windowWidth) {
+            if(this.x1 >= displayWidth) {
               this.moveBool = false;
             }
 
@@ -342,14 +337,12 @@ class crawler {
                         else {
                           //flip a coin
 
-                          if (abs(rightMove[1] - windowWidth/2) > abs(allConnecting[index][1] -windowWidth/2)) {
+                          if (abs(rightMove[1] - displayWidth/2) > abs(allConnecting[index][1] -displayWidth/2)) {
 
                             rightMove = allConnecting[index]
 
                           }
-                          // let r = random(0,1);
-                          // if (r > .5) {
-                          // }
+
 
                           }
 
@@ -388,7 +381,6 @@ class crawler {
 
         //check to see if there were no valid segments
         if(rightMove == null && leftMove == null) {
-          // console.log("i'm saying that both left and right are null" +console.log(rightMove) + "  " + console.log(leftMove))
           this.moveBool = false;
         }
         else {
@@ -401,27 +393,10 @@ class crawler {
 
             //if right move exists and isn't backtracking
             if (rightMove !== null ) {
-              // console.log("this is right move when right move should not be null" +rightMove);
-              // console.log("are we trying to move right and erroring?")
 
-              //if our right move isn't backtracking
-              // if(rightMove[0] != originX && rightMove[1] != originY) {
                 this.x1 = rightMove[0];
                 this.y1 = rightMove[1];
-              // }
 
-              // else {
-                //if our right move is backtracking and if left Move isn't null
-              //   if(leftMove !==null) {
-              //     this.x1 = leftMove[0];
-              //     this.y1 = leftMove[1];
-              //
-              //   }
-              //   else {
-              //     //moving right we would back track, so let's just stop isntead
-              //     this.moveBool = false;
-              //   }
-              // // }
             }
 
             else {
@@ -450,7 +425,6 @@ function  validSegment(v0,vTest) {
 
       for(var step = 0; step < 1 ; step+= sampleSize/100 ) {
         let vProjected = p5.Vector.lerp(v0,vTest,step);
-        // console.log(vProjected);
 
         if (colorMatch(vProjected.x,vProjected.y)) {
           blackCount++;
@@ -459,7 +433,6 @@ function  validSegment(v0,vTest) {
       }
 
 
-      console.log("this is blackCount" + blackCount);
       if(blackCount >= 2) {
 
         return true;
@@ -473,9 +446,6 @@ function  validSegment(v0,vTest) {
 function colorMatch(x,y) {
       let black = color(0,0,0,255);
       let nextColor = color(get(x,y));
-
-       //console.log("this is black" + black.toString());
-       //console.log("this is next pixel" + nextColor.toString());
       if (black.toString() ==  nextColor.toString()) {
         return true;
 
@@ -485,11 +455,25 @@ function colorMatch(x,y) {
       }
     }
 
-
 function moveFour(rad,face) {
-face.x = mouseX;
-face.y = mouseY;
 face.radius = rad;
+
+  if (keyIsDown(LEFT_ARROW)) {
+    face.x -= 5;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    face.x += 5;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    face.y -= 5;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    face.y += 5;
+  }
+
 
 }
 }
