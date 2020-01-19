@@ -1,6 +1,8 @@
 let titleCard
+let buttonBegin
 function preload() {
-  titleCard = loadImage('Assets/TitleCard.png')
+  titleCard = loadImage('Assets/TitleCard_OneLine.png')
+  buttonBegin = loadImage('Assets/Button_Begin.png')
 }
 
 //scene manager
@@ -13,7 +15,6 @@ var sceneBottomMargin;
 
 function setup() {
   createCanvas(displayWidth, displayHeight);
-  // backgroundColor = color(245, 240, 228);
   colorMode(RGB,255);
   backgroundColor = color(238, 238, 200);
 	sceneMargin = (displayWidth - displayWidth/2)/2;
