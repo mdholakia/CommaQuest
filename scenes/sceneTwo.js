@@ -27,7 +27,8 @@ function SceneTwo() {
 
 
   this.draw = () => {
-    textDisplay("You reach a forest. There are tall trees and on them, a rich dark fruit.You remember hunger.")
+    background(205);
+    textDisplay("You reach a forest. There are tall trees and on them, a rich dark fruit. You remember hunger.")
   //   noCursor();
   //   //display our character on our cursor
     moveTwo(faceTwo);
@@ -81,20 +82,18 @@ function SceneTwo() {
     specialTree(faceTwo);
 
 if(fruit.eaten && sceneExitDelay === undefined) {
-  // startTime = millis();
-  // while(millis() > startTime + 100) {
-  //   background(0);
-  // }
   sceneExitDelay = setTimeout(function() {
     mgr.showNextScene();
-  }, 1000);
+  }, 2000);
 }
 
 }
 
 this.mouseClicked = () => {
+  console.log("click")
 
-  if((faceTwo.x  < specialTreeX + 100) && (faceTwo.x  > specialTreeX - 100) && !fruit.fallen) {
+  if((faceTwo.x <= specialTreeX + 130) && (faceTwo.x >= specialTreeX - 25) && !fruit.fallen) {
+    console.log("falling")
     fruit.fall();
   }
 
@@ -182,14 +181,21 @@ function specialTree (face) {
 
   }
 
-  if((face.x < specialTreeX + 50) && (face.x > specialTreeX - 50)) {
+  if((face.x <= specialTreeX + 130) && (face.x >= specialTreeX - 25)) {
   //only shake the tree if the fruit hasn't fallen
   if(!fruit.fallen){
       drawPunct("Y",specialTreeSize,specialTreeX + (sin(TWO_PI * millis()/5 )*3 ),specialTreeY,7);
+      textSize(20);
 
       push();
       translate ((sin(TWO_PI * millis()/4 ) + 2), 0);
+
       treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
+      pop();
+      push();
+      translate (0, (sin(TWO_PI * millis()/4 ) + 2));
+
+      text("*Click*",face.x - face.radius/2,face.y - 40);
       pop();
       fruit.shake();
       fruit.draw();

@@ -14,7 +14,7 @@ let faceFour;
   }
 
   this.setup = () => {
-
+  noiseSeed(34);
   faceFour = new smileyFace(displayWidth/2,displayHeight/2,500);
   spiderClickCounter = 2;
   //setting up spider web

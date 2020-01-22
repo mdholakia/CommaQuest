@@ -4,8 +4,8 @@ let sceneExitDelay;
 let buttonX;
 let buttonY;
   this.setup = () => {
-    buttonX = displayWidth/2 - buttonBegin.width/3;
-    buttonY = sceneTopMargin * 2/3 + titleCard.height + 20;
+    buttonX = windowWidth/2 - buttonBegin.width/3;
+    buttonY = windowHeight/2 + buttonBegin.height/2;
     sceneExitDelay = false;
 
   }
@@ -13,24 +13,21 @@ let buttonY;
 
   this.draw = () => {
     let fakeColor = color(get(0,0));
-    background(255);
+    background(240)
     cursor();
-    let string = "You can use arrow keys and mouse-clicks to interact with the world. "
+    let string = "You can use arrow keys and mouse-clicks to interact with the world."
     fill(0);
     textFont("Amatic SC");
-    var textBoxSize= 350;
-    textAlign(CENTER);
-    textSize(20);
+    var textBoxSize= 600;
+
 
 
 
     // text(string,windowWidth/2 , windowHeight/2 - 100,textBoxSize);
-    image(titleCard, displayWidth/2 - titleCard.width/2,sceneTopMargin * 2/3);
+    image(titleCard, windowWidth/2 - titleCard.width/2,windowHeight/2 - titleCard.height);
     textLeading(28);
     fill(0);
-    textFont("IM Fell Double Pica");
-    var textStart = displayWidth/2 - textBoxSize/2;
-   text(string,textStart, sceneTopMargin * 2/3 + titleCard.height + 100,textBoxSize);
+
    textSize(40);
    textFont("Amatic SC");
 
@@ -42,10 +39,17 @@ let buttonY;
 
    if(clearBool) {
      background(color(0));
+     fill(255);
+     textSize(30);
+     textAlign(LEFT);
+     textFont("Helvetica");
+     var textStart = windowWidth/2 - textBoxSize/2;
+     text(string,textStart,windowHeight/2 - 40,textBoxSize);
+
      if(!sceneExitDelay){
      setTimeout(function() {
        mgr.showNextScene();
-     }, 1500);
+     }, 3000);
      sceneExitDelay = true;
     }
    }

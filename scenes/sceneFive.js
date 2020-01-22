@@ -2,6 +2,7 @@ function SceneFive() {
   faceFive = new smileyFace(displayWidth/2,displayHeight/2 - 200,50);
   let caption;
   let doorBool;
+  let ascendBool;
   inverseFace = new smileyFace(displayWidth/2, displayHeight/3,50);
   let oldMouseY = mouseY;
   this.preload = () => {
@@ -113,7 +114,11 @@ moveFive(faceFive);
 
   function moveFive(face) {
 
+  if(ascendBool) {
+    //do nothing because we don't want arrow controls
+  }
 
+  else {
   if (keyIsDown(LEFT_ARROW)) {
     face.x -= 3;
   }
@@ -138,7 +143,7 @@ moveFive(faceFive);
     face.y = displayHeight/2 + 200;
   }
 
-
+  }
 
   }
 
@@ -159,6 +164,7 @@ moveFive(faceFive);
 
     if(onDoor(h,w,x,y)) {
       ascend(faceFive);
+      ascendBool = true;
     }
 
 
