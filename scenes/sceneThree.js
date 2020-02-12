@@ -164,7 +164,7 @@ function comet(skyColor) {
 
   if ((cometTimer < displayWidth/2 + 20) && (cometTimer > displayWidth/2 - 20)) {
 
-    faceThree.nose = true;
+    faceThree.rightEye = true;
 
   }
 

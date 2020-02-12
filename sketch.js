@@ -1,8 +1,15 @@
-let titleCard
-let buttonBegin
+let titleCard;
+let buttonBegin;
+let soundTwo;
+let soundTwo_footsteps;
 function preload() {
   titleCard = loadImage('Assets/TitleCard_OneLine.png')
   buttonBegin = loadImage('Assets/Button_Begin.png')
+  soundFormats('wav', 'ogg');
+  soundTwo = loadSound('Assets/two.wav');
+  soundTwo_footsteps = loadSound('Assets/Footsteps.wav');
+  // soundTwo_footsteps.playMode('sustain');
+
 }
 
 //scene manager
@@ -16,7 +23,7 @@ var sceneBottomMargin;
 function setup() {
   createCanvas(displayWidth, displayHeight);
   colorMode(RGB,255);
-  backgroundColor = color(238, 238, 200);
+  backgroundColor = color(255, 254, 245);
 	sceneMargin = (displayWidth - displayWidth/2)/2;
   sceneTopMargin = displayHeight/5;
   sceneBottomMargin = displayHeight - displayHeight/10;
@@ -127,4 +134,13 @@ function textDisplay(string) {
   textFont("IM Fell Double Pica");
   text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
 
+}
+
+function startSound(sound) {
+sound.setVolume(0.1);
+sound.loop();
+}
+
+function stopSound (sound) {
+  sound.fade(0,.75);
 }

@@ -183,7 +183,15 @@ moveFive(faceFive);
     }
     else {
 
-      fadeOut();
+      background(0);
+      textSize(30);
+      var textBoxSize= 600;
+      textAlign(LEFT);
+      textFont("Helvetica");
+      let string2="The End. Thanks for coming on this strange little journey with me :)."
+      var textStart = windowWidth/2 - textBoxSize/2;
+      fill(255);
+      text(string2,textStart,windowHeight/2 - 40,textBoxSize);
     }
 
 

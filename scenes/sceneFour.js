@@ -9,6 +9,7 @@ let amount = .2;
 var pointX;
 var pointY;
 let faceFour;
+let timer;
   this.preload = () => {
 
   }
@@ -27,7 +28,7 @@ let faceFour;
   //Jitter edges of diagram
   voronoiJitterBorder(true);
   voronoiSiteFlag(false);
-
+  timer = millis();
   angleMode(RADIANS);
   let r;
   let a = 2;
@@ -125,12 +126,14 @@ let faceFour;
 
 
   this.draw = () => {
-
-
+    if ((millis() - timer > 2000) && spiderClickCounter - 2 == 0) {
+    textSize(20);
+    text("*Click*",faceFour.x - 20,faceFour.y - faceFour.radius);
+    }
 
     faceFour.leftEye = true;
     //faceFour.upsideDownMouth = true;
-    faceFour.nose = true;
+    faceFour.rightEye = true;
     faceFour.display(200);
     moveFour(200,faceFour);
     voronoiDraw();
@@ -173,7 +176,7 @@ let faceFour;
         // }
         keyPressed(faceFour);
 
-  textDisplay("Crossing a valley, you stop to watch a spider spin. The wind has torn holes in the web. You feel sorry for the spider trying to make its way home.")
+  textDisplay("Crossing a valley, you stop to watch a spider spin. The wind has torn holes in the web. You feel sorry for the spider trying to make its way to the other side.")
   }
 
   this.mouseClicked = () => {
@@ -201,7 +204,7 @@ function nextScene() {
 }
 function addEye(face,spider) {
 if((spiderClickCounter > 32) || (spider.x1>=displayWidth )){
-  face.rightEye = true;
+  face.nose = true;
 
   setTimeout(function() {
 
@@ -256,10 +259,7 @@ class crawler {
       drawPunct(".",15,x + 5, y - 7,0);
 
       if(!this.moveBool) {
-
         drawPunct("-- %$%^$",random(18,20),x + 100, y,random(2,10));
-
-
       }
     }
 
@@ -460,19 +460,25 @@ face.radius = rad;
 
   if (keyIsDown(LEFT_ARROW)) {
     face.x -= 5;
-  }
+    return false;
 
+  }
   if (keyIsDown(RIGHT_ARROW)) {
     face.x += 5;
-  }
+    return false;
 
+  }
   if (keyIsDown(UP_ARROW)) {
     face.y -= 5;
-  }
+    return false;
 
+  }
   if (keyIsDown(DOWN_ARROW)) {
     face.y += 5;
+    return false;
+
   }
+
 
 
 }
