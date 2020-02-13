@@ -91,7 +91,7 @@ this.mouseClicked = () => {
   }
 
   //testing if you are eating the fruit
-  else if(fruit.fallen && Math.abs(faceTwo.x - fruit.x) < 50 && Math.abs(faceTwo.y - fruit.y) < 50) {
+  else if(fruit.fallen && Math.abs(faceTwo.x - fruit.x) < 75 && Math.abs(faceTwo.y - fruit.y) < 75) {
     faceTwo.leftEye = true;
     fruit.eaten = true;
 
@@ -227,7 +227,7 @@ class specialFruit {
 
       }
       else {
-        soundTwo_footsteps.play();
+        soundTwo_footsteps.loop();
       }
     }
     else {

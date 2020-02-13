@@ -23,7 +23,7 @@ var sceneBottomMargin;
 function setup() {
   createCanvas(displayWidth, displayHeight);
   colorMode(RGB,255);
-  backgroundColor = color(255, 254, 245);
+  backgroundColor = color(235, 231, 228);
 	sceneMargin = (displayWidth - displayWidth/2)/2;
   sceneTopMargin = displayHeight/5;
   sceneBottomMargin = displayHeight - displayHeight/10;
@@ -32,6 +32,7 @@ function setup() {
 
   mgr = new SceneManager();
   mgr.addScene ( SceneOpening );
+  mgr.addScene ( ScenePreview );
   mgr.addScene ( SceneOne );
   mgr.addScene ( SceneTwo );
   mgr.addScene ( SceneThree );
@@ -132,7 +133,7 @@ function textDisplay(string) {
   var marginBottom = displayHeight/8;
   //text-dependent on case:
   textFont("IM Fell Double Pica");
-  text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
+  // text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
 
 }
 
