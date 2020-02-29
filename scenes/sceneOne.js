@@ -35,7 +35,9 @@ function SceneOne() {
   //For Scene one
   function moveOne(face) {
       if (keyIsDown(LEFT_ARROW)) {
+
         face.x -= 4;
+
       }
       if (keyIsDown(RIGHT_ARROW)) {
         face.x += 4;

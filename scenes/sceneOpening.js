@@ -7,7 +7,6 @@ let buttonY;
     buttonX = windowWidth/2 - buttonBegin.width/3;
     buttonY = windowHeight/2 + buttonBegin.height/2;
     sceneExitDelay = false;
-
   }
 
 
