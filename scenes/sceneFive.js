@@ -3,6 +3,10 @@ function SceneFive() {
   let caption;
   let doorBool;
   let ascendBool;
+  let x = 0;
+  let w = displayWidth;
+  let y = 0;
+  let h = displayHeight;
   inverseFace = new smileyFace(displayWidth/2, displayHeight/3,50);
   let oldMouseY = mouseY;
   this.preload = () => {
@@ -184,14 +188,26 @@ moveFive(faceFive);
     else {
 
       background(0);
-      textSize(30);
+      textSize(100);
       var textBoxSize= 600;
-      textAlign(LEFT);
-      textFont("Helvetica");
-      let string2="The End. Thanks for coming on this strange little journey with me :)."
+      textAlign(CENTER);
+      textFont("Amatic SC");
+
+
+      let string2="The End"
       var textStart = windowWidth/2 - textBoxSize/2;
       fill(255);
       text(string2,textStart,windowHeight/2 - 40,textBoxSize);
+      for(let i = 0; i < 400; i++) {
+        fill(255,255,255, random(150,255));
+        circle(random(0, w), random(0, h),1);
+        fill(255);
+        circle(random(0, w), random(0, h),2);
+
+      }
+      fill(map(sin(millis()/300),0,1,230,255));
+      circle(windowWidth/2 + 100, windowHeight/2 - 50,4);
+
     }
 
 

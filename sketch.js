@@ -3,7 +3,7 @@ let buttonBegin;
 let soundTwo;
 let soundTwo_footsteps;
 function preload() {
-  titleCard = loadImage('Assets/TitleCard_OneLine.png')
+  titleCard = loadImage('Assets/TitleCard_OneLine_White.png')
   buttonBegin = loadImage('Assets/Button_Begin.png')
   soundFormats('wav', 'ogg');
   soundTwo = loadSound('Assets/two.wav');
@@ -133,7 +133,7 @@ function textDisplay(string) {
   var marginBottom = displayHeight/8;
   //text-dependent on case:
   textFont("IM Fell Double Pica");
-  // text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
+  text(string,displayWidth/2 - textBoxSize/2, marginBottom * 3/4,textBoxSize);
 
 }
 

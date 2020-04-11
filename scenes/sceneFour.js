@@ -261,6 +261,10 @@ class crawler {
       if(!this.moveBool) {
         drawPunct("-- %$%^$",random(18,20),x + 100, y,random(2,10));
       }
+      if(spiderClickCounter > 32) {
+        drawPunct("thanks!",random(18,20),x + 100, y,random(2,10));
+      }
+
     }
 
     display() {
