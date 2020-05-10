@@ -127,8 +127,9 @@ let timer;
 
   this.draw = () => {
     if ((millis() - timer > 2000) && spiderClickCounter - 2 == 0) {
-    textSize(20);
-    text("*Click*",faceFour.x - 20,faceFour.y - faceFour.radius);
+    textSize(40);
+    textFont("Amatic SC");
+    text("*Click*",faceFour.x - 40 ,faceFour.y - faceFour.radius);
     }
 
     faceFour.leftEye = true;

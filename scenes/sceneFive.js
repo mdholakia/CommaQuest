@@ -7,6 +7,7 @@ function SceneFive() {
   let w = displayWidth;
   let y = 0;
   let h = displayHeight;
+  let doorX = displayWidth - sceneMargin - 3;
   inverseFace = new smileyFace(displayWidth/2, displayHeight/3,50);
   let oldMouseY = mouseY;
   this.preload = () => {
@@ -62,7 +63,14 @@ function SceneFive() {
   else {
     caption = "You are whole again."
     stay(inverseFace,vStartBank);
+    if(doorBool!=true) {
+      soundThree_lullaby.play();
+      soundThree_lullaby.setVolume(.005);
+    }
     doorBool = true;
+
+
+
   }
 
   //faceFive.upsideDownMouth = true;
@@ -100,7 +108,7 @@ function SceneFive() {
 
 
 if(doorBool == true) {
-  door(displayWidth - sceneMargin - 3,vStartBank - 12);
+  door(doorX,vStartBank - 12);
 }
 
 if(doorBool != true ) {
@@ -129,6 +137,11 @@ moveFive(faceFive);
 
   if (keyIsDown(RIGHT_ARROW)) {
     face.x += 3;
+
+    if(doorBool == true) {
+      let ratio = (doorX - face.x)/(doorX - windowWidth/2)
+      soundThree_lullaby.setVolume(map(ratio,0,1,.3,0));
+    }
   }
 
   if (keyIsDown(UP_ARROW)) {
@@ -182,6 +195,7 @@ moveFive(faceFive);
   }
 
   function ascend(face) {
+    soundThree_lullaby.setVolume(map(faceFive.radius/50,1,0,.3,1.2));
     if(faceFive.radius > 0) {
     faceFive.radius = faceFive.radius  - .5;
     }
@@ -198,6 +212,7 @@ moveFive(faceFive);
       var textStart = windowWidth/2 - textBoxSize/2;
       fill(255);
       text(string2,textStart,windowHeight/2 - 40,textBoxSize);
+      // image(credits,windowWidth/2,windowHeight/2,200,300);
       for(let i = 0; i < 400; i++) {
         fill(255,255,255, random(150,255));
         circle(random(0, w), random(0, h),1);
@@ -205,8 +220,8 @@ moveFive(faceFive);
         circle(random(0, w), random(0, h),2);
 
       }
-      fill(map(sin(millis()/300),0,1,230,255));
-      circle(windowWidth/2 + 100, windowHeight/2 - 50,4);
+      fill(map(sin(millis()/300),0,1,200,255));
+      circle(windowWidth/2 + 100, windowHeight/2 - 50,4 + sin(millis()/2));
 
     }
 

@@ -9,8 +9,8 @@ let y = 0;
 let h = displayHeight;
 let cPos
   this.setup = () => {
-    buttonX = windowWidth/2 - buttonBegin.width/3;
-    buttonY = windowHeight/2 + buttonBegin.height/2 + 25;
+    buttonX = windowWidth/2 - buttonBegin.width/3 + 10;
+    buttonY = windowHeight/2 + buttonBegin.height/2 + 25 + 50;
     sceneExitDelay = false;
     cPos = 0;
   }
@@ -50,7 +50,7 @@ let cPos
 
 
     // text(string,windowWidth/2 , windowHeight/2 - 100,textBoxSize);
-    image(titleCard, windowWidth/2 - titleCard.width/2 ,windowHeight/2 - titleCard.height + 70);
+    image(titleCard, windowWidth/2 - titleCard.width/2 ,windowHeight/2 - titleCard.height + 90);
     textLeading(28);
     fill(0);
 

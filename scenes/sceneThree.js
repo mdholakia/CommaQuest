@@ -25,6 +25,11 @@ const stars = []
   mountainWidth = displayWidth - 2*sceneMargin;
   starOffX = 0;
   starOffY = 0;
+  startSound(soundThree_sea);
+  soundOne_orchestra.loop()
+  soundOne_orchestra.setVolume(.003);
+  soundThree_lullaby.loop();
+  // soundThree_chatter.loop();
   }
 
 
@@ -33,6 +38,19 @@ const stars = []
     let nightColor = color(10, 0, 10);
 
     const interpolationFactor = getLerpFactor(faceThree.x, displayWidth / 2, mountainWidth)
+    soundThree_lullaby.setVolume(map(interpolationFactor,0,1,0,0.3))
+
+
+    if(faceThree.x < displayWidth/2) {
+      soundThree_sea.setVolume(map(interpolationFactor,0,1,.1,0))
+    }
+    else {
+      soundThree_sea.setVolume(.02)
+
+
+    }
+
+
     let skyColor = lerpColor(backgroundColor,nightColor,interpolationFactor)
     background(skyColor);
 
@@ -103,6 +121,8 @@ function nextScene(face) {
   if(face.x >= displayWidth*.98) {
       if(sceneExitDelay ===undefined) {
         sceneExitDelay = setTimeout(function() {
+          soundThree_lullaby.stop();
+          soundThree_sea.stop();
           mgr.showNextScene();
         }, 1000);
 
@@ -119,13 +139,20 @@ function  moveThree(lerpFactor, face) {
 
 
     if (keyIsDown(LEFT_ARROW)) {
-      face.x -= 5;
+      face.x -= 2;
 
 
     }
 
     if (keyIsDown(RIGHT_ARROW)) {
-      face.x += 5;
+
+      if(face.x < windowWidth/2) {
+      face.x += map(lerpFactor,0,1,1,2);
+      }
+      else {
+        face.x += map(lerpFactor,1,0,2,5);
+      }
+
     }
 
 }
@@ -165,6 +192,8 @@ function comet(skyColor) {
   if ((cometTimer < displayWidth/2 + 20) && (cometTimer > displayWidth/2 - 20)) {
 
     faceThree.rightEye = true;
+    // soundThree_chime.play();
+    // soundThree_chime.setVolume(.03);
 
   }
 

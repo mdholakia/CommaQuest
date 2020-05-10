@@ -153,6 +153,12 @@ function specialTree (face) {
     //draw the single interactive tree
   drawPunct("Y",specialTreeSize,specialTreeX,specialTreeY,7);
   treeCanopy(specialTreeSize,specialTreeX,specialTreeY,10,color(255,0,10));
+
+
+  if(!fruit.eaten && Math.abs(faceTwo.x - fruit.x) < 40 && Math.abs(faceTwo.y - fruit.y) < 40) {
+    textSize(20);
+  text("*Click*",face.x - face.radius/2,face.y - 40);
+  }
   fruit.draw();
 
   }

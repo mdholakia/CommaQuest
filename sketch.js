@@ -3,11 +3,22 @@ let buttonBegin;
 let soundTwo;
 let soundTwo_footsteps;
 function preload() {
-  titleCard = loadImage('Assets/TitleCard_OneLine_White.png')
+  titleCard = loadImage('Assets/TitleCard.png')
   buttonBegin = loadImage('Assets/Button_Begin.png')
-  soundFormats('wav', 'ogg');
+  // credits = loadImage('Assets/credits.jpg')
+  soundFormats('wav','mp3', 'ogg');
   soundTwo = loadSound('Assets/two.wav');
+  soundOne = loadSound('Assets/scene1ambience.mp3');
   soundTwo_footsteps = loadSound('Assets/Footsteps.wav');
+  soundOne_footOne = loadSound('Assets/floor12.mp3')
+  soundOne_footTwo = loadSound('Assets/floor16.mp3')
+  soundOne_orchestra = loadSound('Assets/OrchestralSwell.wav')
+  soundOne_rustle = loadSound('Assets/rustle.mp3')
+  soundThree_sea = loadSound('Assets/deepSea.wav')
+  soundThree_lullaby = loadSound('Assets/lullaby_dedit.mp3')
+  soundThree_chatter = loadSound('Assets/chatter.mp3')
+
+
   // soundTwo_footsteps.playMode('sustain');
 
 }
@@ -45,13 +56,24 @@ function setup() {
 
 function draw() {
 
+
+  if(displayWidth > 500){
+
   clear();
   //using the get() is fucking up our color mode somehow, so we're just going to put one at the top so that the scene starts with the weird color mode
   let fakeColor = color(get(0,0));
 
   background(backgroundColor);
   mgr.draw();
-
+}
+else {
+  background(155, 48, 255);
+  textAlign(LEFT);
+  fill(255);
+  textSize(20);
+  rectMode(CENTER);
+  text("Oh shoot friend, you're on that fancy mobile device 😭. Don't you know, a bigger screen = better time.",windowWidth/2, windowHeight/2,windowWidth*2/3,300);
+}
 }
 
 //sketch global helpers
